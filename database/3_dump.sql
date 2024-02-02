@@ -45,7 +45,7 @@ VALUES
   ('ID-007', 'Jazz Music Collection Sale', 'Rare jazz music collection on sale', NULL, 'Musica', 'incrementale', NULL, 35, NULL, 180.00, 18.00, 'in corso', 'seller9@example.com'),
   ('ID-008', 'Electronic Gadgets Extravaganza', 'Auction of cutting-edge electronic gadgets', NULL, 'Elettronica', 'tempoFisso', '2024-06-15', NULL, 70.00, NULL, NULL, 'in corso', 'seller10@example.com'),
   ('ID-009', 'Abstract Art Showcase', 'Auction featuring abstract art pieces', NULL, 'Arte', 'incrementale', NULL, 20, NULL, 150.00, 15.00, 'in corso', 'seller1@example.com'),
-  ('ID-010', 'Sci-Fi and Fantasy Book Auction', 'Auction of rare sci-fi and fantasy books', NULL, 'Libri', 'tempoFisso', '2024-07-01', NULL, 80.00, NULL, NULL, 'in corso', 'seller2@example.com');
+  ('ID-010', 'Sci-Fi and Fantasy Book Auction', 'Auction of rare sci-fi and fantasy books', NULL, 'Altro', 'tempoFisso', '2024-07-01', NULL, 80.00, NULL, NULL, 'in corso', 'seller2@example.com');
 
 
 
@@ -68,14 +68,14 @@ VALUES
 -- NOTIFICA table--------------------------------------------
 INSERT INTO NOTIFICA (idNotifica, descrizione, tempo, immagine, emailCompratore, emailVenditore)
 VALUES
-  ('ID-N003', 'Auction Ended', '2024-02-05', NULL, 'buyer3@example.com', 'seller3@example.com'),
-  ('ID-N004', 'New Bid Placed', '2024-02-08', NULL, 'buyer4@example.com', 'seller4@example.com'),
-  ('ID-N005', 'Item Shipped', '2024-02-12', NULL, 'buyer5@example.com', 'seller5@example.com'),
-  ('ID-N006', 'Payment Received', '2024-02-15', NULL, 'buyer6@example.com', 'seller6@example.com'),
-  ('ID-N007', 'Congratulations! You won', '2024-02-20', NULL, 'buyer7@example.com', 'seller7@example.com'),
-  ('ID-N008', 'Important Auction Update', '2024-02-25', NULL, 'buyer8@example.com', 'seller8@example.com'),
-  ('ID-N009', 'Bid Confirmation', '2024-03-02', NULL, 'buyer9@example.com', 'seller9@example.com'),
-  ('ID-N010', 'Item Delivered', '2024-03-05', NULL, 'buyer10@example.com', 'seller10@example.com');
+  ('Auction Ended', '2024-02-05', NULL, 'buyer3@example.com', 'seller3@example.com'),
+  ('New Bid Placed', '2024-02-08', NULL, 'buyer4@example.com', 'seller4@example.com'),
+  ('Item Shipped', '2024-02-12', NULL, 'buyer5@example.com', 'seller5@example.com'),
+  ('Payment Received', '2024-02-15', NULL, 'buyer6@example.com', 'seller6@example.com'),
+  ('Congratulations! You won', '2024-02-20', NULL, 'buyer7@example.com', 'seller7@example.com'),
+  ('Important Auction Update', '2024-02-25', NULL, 'buyer8@example.com', 'seller8@example.com'),
+  ('Bid Confirmation', '2024-03-02', NULL, 'buyer9@example.com', 'seller9@example.com'),
+  ('Item Delivered', '2024-03-05', NULL, 'buyer10@example.com', 'seller10@example.com');
 
 
 ---------------------------------------------------------------------------------------------------------------------------_-

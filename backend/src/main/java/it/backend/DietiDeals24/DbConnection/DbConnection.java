@@ -1,5 +1,6 @@
 package it.backend.DietiDeals24.DbConnection;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -7,10 +8,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-//using singleton pattern
-public class Connessione {
+public class DbConnection {
 
-    private static Connessione istanza;
+    private static DbConnection istanza;
 
     public Connection connection = null;
 
@@ -19,7 +19,7 @@ public class Connessione {
     private String password;
     private String driver;
 
-    private Connessione() throws SQLException {
+    private DbConnection() {
         loadDatabaseProprieties();
         try {
             Class.forName(driver);
@@ -32,7 +32,7 @@ public class Connessione {
 
     private void loadDatabaseProprieties() {
         Properties prop = new Properties();
-        try (InputStream input = Connessione.class.getClassLoader().getResourceAsStream("database.properties")) {
+        try (InputStream input = new FileInputStream("database.properties")) {
             if (input == null) {
                 System.out.println("Impossibile trovare il file database.properties");
                 return;
@@ -52,11 +52,11 @@ public class Connessione {
         return connection;
     }
 
-    public static Connessione getInstance() throws SQLException {
+    public static DbConnection getInstance() throws SQLException {
         if (istanza == null) {
-            istanza = new Connessione();
+            istanza = new DbConnection();
         } else if (istanza.getConnection().isClosed()) {
-            istanza = new Connessione();
+            istanza = new DbConnection();
         }
         return istanza;
     }
