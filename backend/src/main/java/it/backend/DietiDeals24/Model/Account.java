@@ -1,9 +1,10 @@
 package it.backend.DietiDeals24.Model;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.List;
 
 public abstract class  Account {
-
 
     private ArrayList<Notification> notifications;
 
@@ -25,7 +26,7 @@ public abstract class  Account {
 
 
     //full constructor
-    public Account(String fullName, String imageAccount, String email, String password, String description, Integer telephoneNumber, String country) {
+    protected Account(String fullName, String imageAccount, String email, String password, String description, Integer telephoneNumber, String country) {
         this.fullName = fullName;
         this.imageAccount = imageAccount;
         this.email = email;
@@ -36,11 +37,11 @@ public abstract class  Account {
     }
 
     //starting constructor
-    public Account(String fullName, Integer telephoneNumber, String email, String password) {
+    protected Account(String fullName, Integer telephoneNumber, String email, String password) {
         this.fullName = fullName;
-        this.imageAccount = imageAccount;
         this.email = email;
         this.password = password;
+        this.telephoneNumber = telephoneNumber;
     }
 
 
@@ -73,8 +74,8 @@ public abstract class  Account {
         return country;
     }
 
-    //all set
 
+    //all set
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
@@ -123,23 +124,23 @@ public abstract class  Account {
     	this.notifications.remove(notification);
     }
 
-    //get social link and notification
 
-    public ArrayList<SocialLink> getSocialLinks() {
+    //get social link and notification
+    public List<SocialLink> getSocialLinks() {
     	return this.socialLinks;
     }
 
-    public ArrayList<Notification> getNotifications() {
+    public List<Notification> getNotifications() {
     	return this.notifications;
     }
 
     //set social link and notification
-    public void setSocialLinks(ArrayList<SocialLink> socialLinks) {
-    	this.socialLinks = socialLinks;
+    public void setSocialLinks(List<SocialLink> socialLinks) {
+    	this.socialLinks = (ArrayList<SocialLink>) socialLinks;
     }
 
-    public void setNotifications(ArrayList<Notification> notifications) {
-    	this.notifications = notifications;
+    public void setNotifications(List<Notification> notifications) {
+    	this.notifications = (ArrayList<Notification>) notifications;
     }
 
 

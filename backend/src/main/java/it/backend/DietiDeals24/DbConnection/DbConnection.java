@@ -12,7 +12,7 @@ public class DbConnection {
 
     private static DbConnection istanza;
 
-    public Connection connection = null;
+    private Connection connection = null;
 
     private String url;
     private String nome;

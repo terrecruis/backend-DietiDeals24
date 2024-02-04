@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public abstract class Auction {
 
     private Seller creator;
-
-    private ArrayList<Buyer> partenecipants;
+    
+    private ArrayList<Buyer> participants;
 
     private String title;
 
@@ -20,9 +20,9 @@ public abstract class Auction {
 
 
     //full constructor
-    public Auction(Seller creator, ArrayList<Buyer> partenecipants, String title, String description, String imageAuction, String category, String location) {
+    protected Auction(Seller creator, ArrayList<Buyer> partenecipants, String title, String description, String imageAuction, String category, String location) {
         this.creator = creator;
-        this.partenecipants = partenecipants;
+        this.participants = partenecipants;
         this.title = title;
         this.description = description;
         this.imageAuction = imageAuction;
@@ -36,8 +36,8 @@ public abstract class Auction {
         return creator;
     }
 
-    public ArrayList<Buyer> getPartenecipants() {
-        return partenecipants;
+    public ArrayList<Buyer> getParticipants() {
+        return participants;
     }
 
     public String getTitle() {
@@ -67,8 +67,8 @@ public abstract class Auction {
         this.creator = creator;
     }
 
-    public void setPartenecipants(ArrayList<Buyer> partenecipants) {
-        this.partenecipants = partenecipants;
+    public void setParticipants(ArrayList<Buyer> participants) {
+        this.participants = participants;
     }
 
     public void setTitle(String title) {

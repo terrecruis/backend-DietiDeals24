@@ -30,8 +30,8 @@ CREATE TABLE IF NOT EXISTS COMPRATORE
 (
 	email DOMINIO_EMAIL NOT NULL,
     password VARCHAR NOT NULL,
-	nomeCompleto VARCHAR NOT NULL,
-	number VARCHAR NOT NULL,
+	fullname VARCHAR NOT NULL,
+	telephoneNumber VARCHAR NOT NULL,
     foto VARCHAR,
 	descrizione CHAR(500),
 	nazionalita VARCHAR,
@@ -121,3 +121,13 @@ CREATE OR REPLACE VIEW PUNTATAPIUALTA AS
     WHERE ASTA.idAsta = PUNTATA.idAsta
     AND PUNTATA.importo = (SELECT MAX(importo) FROM PUNTATA WHERE PUNTATA.idAsta = ASTA.idAsta)
     ORDER BY ASTA.StatoAsta;
+
+
+-- TUTTI GLI UTENTI DEL SISTEMA
+CREATE OR REPLACE VIEW UTENTI AS
+    SELECT email, nomeCompleto, 'compratore' AS tipoUtente
+    FROM COMPRATORE
+    UNION
+    SELECT email, nomeCompleto, 'venditore' AS tipoUtente
+    FROM VENDITORE
+    ORDER BY email;
