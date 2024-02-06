@@ -8,7 +8,7 @@ Questa repository contiene il codice sorgente del backend per l'applicazione Die
 Tecnologie utilizzate
 
 Il backend di DietiDeals24 è sviluppato utilizzando JAX-RS, un framework per lo sviluppo di servizi Web RESTful in Java. Questa scelta tecnologica offre una solida base per la creazione di servizi Web scalabili e performanti.
-#Struttura del progetto
+Struttura del progetto
 
 La struttura del progetto è organizzata in modo logico per favorire la manutenibilità e l'estensibilità del codice. Le principali cartelle includono:
 
