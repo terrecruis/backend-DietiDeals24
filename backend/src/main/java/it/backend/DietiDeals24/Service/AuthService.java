@@ -62,5 +62,32 @@ public class AuthService {
         }
     }
 
+    public Response addAccount(String json){
+        try (JsonReader reader = Json.createReader(new StringReader(json))) {
+            JsonObject jsonObject = reader.readObject();
+
+            // Extracting values from JsonObject
+            String email = jsonObject.getString("email");
+            String fullname = jsonObject.getString("fullname");
+            String telephoneNumber = jsonObject.getString("telephoneNumber");
+
+            boolean success = account.addAccountDAO(email, fullname, telephoneNumber);
+
+            if (success) {
+                return Response.ok().build();
+            } else {
+                return Response.status(Response.Status.UNAUTHORIZED).entity("credentials already exists!").build();
+            }
+
+        }
+        catch (QueryExecutionException e) {
+            // Handle JSON parsing or other exceptions
+            return Response.status(Response.Status.BAD_REQUEST).entity("Credential already exists!").build();
+        } catch (Exception e) {
+            // Handle JSON parsing or other exceptions
+            return Response.status(Response.Status.BAD_REQUEST).entity("Invalid JSON format").build();
+        }
+    }
+
 }
 

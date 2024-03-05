@@ -29,4 +29,15 @@ public class AuthController {
     public Response signup(String json) {
         return service.doSignup(json);
     }
+
+    //funzione per aggiungere un nuovo utente
+    @POST
+    @Path("/user")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addAccount(String json) {
+        return service.addAccount(json);
+    }
+
+
 }

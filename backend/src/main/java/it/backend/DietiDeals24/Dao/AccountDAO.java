@@ -11,4 +11,6 @@ public interface AccountDAO<T> {
 
     boolean updateAccount(T user);
 
+    boolean addAccountDAO(String email, String fullname, String telephoneNumber);
+
 }
