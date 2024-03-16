@@ -7,7 +7,10 @@ public class Seller extends Account {
     private ArrayList<Auction> auctionsGenerated;
 
 
-    public Seller(String fullName, String imageAccount, String email, String password, String description, Integer telephoneNumber, String country, String AuctionsGenerated){
+    public Seller(String email) {
+        super(email);
+    }
+    public Seller(String fullName, String imageAccount, String email, String password, String description, Integer telephoneNumber, String country, String AuctionsGenerated) {
         super(fullName, imageAccount, email, password, description, telephoneNumber, country);
         this.auctionsGenerated = new ArrayList<Auction>();
     }

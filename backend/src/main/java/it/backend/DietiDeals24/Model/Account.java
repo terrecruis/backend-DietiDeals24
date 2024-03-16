@@ -44,6 +44,9 @@ public abstract class  Account {
         this.telephoneNumber = telephoneNumber;
     }
 
+    protected Account(String email) {
+        this.email = email;
+    }
 
     //all get
     public String getFullName() {

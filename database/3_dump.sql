@@ -2,34 +2,34 @@
 
 
 -- COMPRATORE table
-INSERT INTO COMPRATORE (email, password, nomeCompleto, number, foto, descrizione, nazionalita, link1, link2)
+INSERT INTO COMPRATORE (email, nomeCompleto, telephoneNumber, foto, descrizione, nazionalita, link1, link2)
 VALUES
-  ('buyer1@example.com', 'pass123', 'John Doe', '123456789', NULL, 'Art enthusiast', 'USA', 'http://buyerlink1.com', 'http://buyerlink2.com'),
-  ('buyer2@example.com', 'secure456', 'Alice Johnson', '987654321', NULL, 'Book collector', 'UK', 'http://buyerlink1.com', 'http://buyerlink2.com'),
-  ('buyer3@example.com', 'artlover567', 'Emma White', '654123789', NULL, 'Art connoisseur and collector', 'France', 'http://buyerlink1.com', 'http://buyerlink2.com'),
-  ('buyer4@example.com', 'buy4me!789', 'Robert Davis', '789456123', NULL, 'Game enthusiast and collector', 'Germany', 'http://buyerlink1.com', 'http://buyerlink2.com'),
-  ('buyer5@example.com', 'mypass123', 'Sophie Turner', '456789012', NULL, 'Music lover and collector', 'Italy', 'http://buyerlink1.com', 'http://buyerlink2.com'),
-  ('buyer6@example.com', 'ilovegadgets', 'Daniel Brown', '012345678', NULL, 'Electronics aficionado', 'Spain', 'http://buyerlink1.com', 'http://buyerlink2.com'),
-  ('buyer7@example.com', 'passart123', 'Olivia Green', '789012345', NULL, 'Passionate about art and culture', 'USA', 'http://buyerlink1.com', 'http://buyerlink2.com'),
-  ('buyer8@example.com', 'sports4life', 'Ryan Clark', '234567890', NULL, 'Dedicated sports collector', 'Canada', 'http://buyerlink1.com', 'http://buyerlink2.com'),
-  ('buyer9@example.com', 'musicluvr789', 'Isabella Martinez', '567890123', NULL, 'Music and instrument collector', 'France', 'http://buyerlink1.com', 'http://buyerlink2.com'),
-  ('buyer10@example.com', 'passionategamer', 'Mason Lee', '890123456', NULL, 'Enthusiastic gamer and collector', 'Germany', 'http://buyerlink1.com', 'http://buyerlink2.com');
+  ('buyer1@example.com',  'John Doe', '123456789', NULL, 'Art enthusiast', 'USA', 'http://buyerlink1.com', 'http://buyerlink2.com'),
+  ('buyer2@example.com',  'Alice Johnson', '987654321', NULL, 'Book collector', 'UK', 'http://buyerlink1.com', 'http://buyerlink2.com'),
+  ('buyer3@example.com',  'Emma White', '654123789', NULL, 'Art connoisseur and collector', 'France', 'http://buyerlink1.com', 'http://buyerlink2.com'),
+  ('buyer4@example.com',  'Robert Davis', '789456123', NULL, 'Game enthusiast and collector', 'Germany', 'http://buyerlink1.com', 'http://buyerlink2.com'),
+  ('buyer5@example.com',  'Sophie Turner', '456789012', NULL, 'Music lover and collector', 'Italy', 'http://buyerlink1.com', 'http://buyerlink2.com'),
+  ('buyer6@example.com',  'Daniel Brown', '012345678', NULL, 'Electronics aficionado', 'Spain', 'http://buyerlink1.com', 'http://buyerlink2.com'),
+  ('buyer7@example.com',  'Olivia Green', '789012345', NULL, 'Passionate about art and culture', 'USA', 'http://buyerlink1.com', 'http://buyerlink2.com'),
+  ('buyer8@example.com',  'Ryan Clark', '234567890', NULL, 'Dedicated sports collector', 'Canada', 'http://buyerlink1.com', 'http://buyerlink2.com'),
+  ('buyer9@example.com',  'Isabella Martinez', '567890123', NULL, 'Music and instrument collector', 'France', 'http://buyerlink1.com', 'http://buyerlink2.com'),
+  ('buyer10@example.com',  'Mason Lee', '890123456', NULL, 'Enthusiastic gamer and collector', 'Germany', 'http://buyerlink1.com', 'http://buyerlink2.com');
 
 
 
 -- VENDITORE table
-INSERT INTO VENDITORE (email, password, nomeCompleto, number, foto, descrizione, nazionalita, link1, link2)
+INSERT INTO VENDITORE (email, nomeCompleto, telephoneNumber, foto, descrizione, nazionalita, link1, link2)
 VALUES
-  ('seller1@example.com', 'artseller567', 'Michael Smith', '234567890', NULL, 'Art dealer and curator', 'Canada', 'http://sellerlink1.com', 'http://sellerlink2.com'),
-  ('seller2@example.com', 'gadgetmaster', 'Thomas Johnson', '456789123', NULL, 'Tech gadgets and innovations seller', 'Canada', 'http://sellerlink1.com', 'http://sellerlink2.com'),
-  ('seller3@example.com', 'artdealer123', 'Emily Brown', '345678912', NULL, 'Specialized in rare artworks', 'USA', 'http://sellerlink1.com', 'http://sellerlink2.com'),
-  ('seller4@example.com', 'gadgetmaster', 'Thomas Johnson', '456789123', NULL, 'Tech gadgets and innovations seller', 'Canada', 'http://sellerlink1.com', 'http://sellerlink2.com'),
-  ('seller5@example.com', 'musicstoreowner', 'Sophie Turner', '567890234', NULL, 'Owner of a music store', 'Italy', 'http://sellerlink1.com', 'http://sellerlink2.com'),
-  ('seller6@example.com', 'electronicsguru', 'Daniel Miller', '678901345', NULL, 'Expert in cutting-edge electronics', 'Spain', 'http://sellerlink1.com', 'http://sellerlink2.com'),
-  ('seller7@example.com', 'artandculture', 'Olivia Green', '789012456', NULL, 'Promoter of art and cultural items', 'USA', 'http://sellerlink1.com', 'http://sellerlink2.com'),
-  ('seller8@example.com', 'sportscollector', 'Ryan Clark', '890123567', NULL, 'Specialized in rare sports memorabilia', 'Canada', 'http://sellerlink1.com', 'http://sellerlink2.com'),
-  ('seller9@example.com', 'musicalinstruments', 'Isabella Martinez', '901234678', NULL, 'Passionate about musical instruments', 'France', 'http://sellerlink1.com', 'http://sellerlink2.com'),
-  ('seller10@example.com', 'gamingexpert', 'Mason Lee', '012345789', NULL, 'Leading authority on rare video games', 'Germany', 'http://sellerlink1.com', 'http://sellerlink2.com');
+  ('seller1@example.com',  'Michael Smith', '234567890', NULL, 'Art dealer and curator', 'Canada', 'http://sellerlink1.com', 'http://sellerlink2.com'),
+  ('seller2@example.com',  'Thomas Johnson', '456789123', NULL, 'Tech gadgets and innovations seller', 'Canada', 'http://sellerlink1.com', 'http://sellerlink2.com'),
+  ('seller3@example.com',  'Emily Brown', '345678912', NULL, 'Specialized in rare artworks', 'USA', 'http://sellerlink1.com', 'http://sellerlink2.com'),
+  ('seller4@example.com',  'Thomas Johnson', '456789123', NULL, 'Tech gadgets and innovations seller', 'Canada', 'http://sellerlink1.com', 'http://sellerlink2.com'),
+  ('seller5@example.com',  'Sophie Turner', '567890234', NULL, 'Owner of a music store', 'Italy', 'http://sellerlink1.com', 'http://sellerlink2.com'),
+  ('seller6@example.com',  'Daniel Miller', '678901345', NULL, 'Expert in cutting-edge electronics', 'Spain', 'http://sellerlink1.com', 'http://sellerlink2.com'),
+  ('seller7@example.com',  'Olivia Green', '789012456', NULL, 'Promoter of art and cultural items', 'USA', 'http://sellerlink1.com', 'http://sellerlink2.com'),
+  ('seller8@example.com',  'Ryan Clark', '890123567', NULL, 'Specialized in rare sports memorabilia', 'Canada', 'http://sellerlink1.com', 'http://sellerlink2.com'),
+  ('seller9@example.com',  'Isabella Martinez', '901234678', NULL, 'Passionate about musical instruments', 'France', 'http://sellerlink1.com', 'http://sellerlink2.com'),
+  ('seller10@example.com',  'Mason Lee', '012345789', NULL, 'Leading authority on rare video games', 'Germany', 'http://sellerlink1.com', 'http://sellerlink2.com');
 
 
 
@@ -62,21 +62,6 @@ VALUES
   ('ID-004', 'buyer8@example.com', 140.00),
   ('ID-005', 'buyer9@example.com', 180.00),
   ('ID-005', 'buyer10@example.com', 210.00);
-
-
-
--- NOTIFICA table--------------------------------------------
-INSERT INTO NOTIFICA (idNotifica, descrizione, tempo, immagine, emailCompratore, emailVenditore)
-VALUES
-  ('Auction Ended', '2024-02-05', NULL, 'buyer3@example.com', 'seller3@example.com'),
-  ('New Bid Placed', '2024-02-08', NULL, 'buyer4@example.com', 'seller4@example.com'),
-  ('Item Shipped', '2024-02-12', NULL, 'buyer5@example.com', 'seller5@example.com'),
-  ('Payment Received', '2024-02-15', NULL, 'buyer6@example.com', 'seller6@example.com'),
-  ('Congratulations! You won', '2024-02-20', NULL, 'buyer7@example.com', 'seller7@example.com'),
-  ('Important Auction Update', '2024-02-25', NULL, 'buyer8@example.com', 'seller8@example.com'),
-  ('Bid Confirmation', '2024-03-02', NULL, 'buyer9@example.com', 'seller9@example.com'),
-  ('Item Delivered', '2024-03-05', NULL, 'buyer10@example.com', 'seller10@example.com');
-
 
 ---------------------------------------------------------------------------------------------------------------------------_-
 

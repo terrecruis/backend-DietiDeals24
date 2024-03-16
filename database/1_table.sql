@@ -29,7 +29,7 @@ CREATE DOMAIN DOMINIO_ID AS VARCHAR
 CREATE TABLE IF NOT EXISTS COMPRATORE
 (
 	email DOMINIO_EMAIL NOT NULL,
-	fullname VARCHAR NOT NULL,
+	nomeCompleto VARCHAR NOT NULL,
 	telephoneNumber VARCHAR NOT NULL,
     foto VARCHAR,
 	descrizione CHAR(500),
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS VENDITORE
 (
 	email DOMINIO_EMAIL NOT NULL,
 	nomeCompleto VARCHAR NOT NULL,
-	number VARCHAR NOT NULL,
+	telephoneNumber VARCHAR NOT NULL,
     foto VARCHAR,
 	descrizione CHAR(500),
 	nazionalita VARCHAR,
@@ -69,6 +69,7 @@ CREATE TABLE IF NOT EXISTS ASTA
     sogliaRialzo DECIMAL(12,2),
     StatoAsta DOMINIO_STATOASTA NOT NULL DEFAULT 'in corso',
     emailVenditore DOMINIO_EMAIL NOT NULL,
+    luogo VARCHAR,
 
     CONSTRAINT asta_pk PRIMARY KEY(idAsta),
     CONSTRAINT astaFK1 FOREIGN KEY(emailVenditore) REFERENCES VENDITORE(email)
@@ -89,7 +90,7 @@ CREATE TABLE IF NOT EXISTS PUNTATA
         ON UPDATE CASCADE,
     CONSTRAINT puntataFK2 FOREIGN KEY(emailCompratore) REFERENCES COMPRATORE(email)
         ON UPDATE CASCADE
-);:
+);
 
 CREATE TABLE IF NOT EXISTS NOTIFICA
 (
@@ -120,6 +121,17 @@ CREATE OR REPLACE VIEW PUNTATAPIUALTA AS
     AND PUNTATA.importo = (SELECT MAX(importo) FROM PUNTATA WHERE PUNTATA.idAsta = ASTA.idAsta)
     ORDER BY ASTA.StatoAsta;
 
+--VISTA CHE MOSTRA LE ASTE ATTIVE
+CREATE OR REPLACE VIEW AsteAttive AS
+    SELECT *
+    FROM ASTA
+    WHERE StatoAsta = 'in corso';
+
+--Vista che mostra per ogni asta la puntata più alta
+CREATE OR REPLACE VIEW AstaImportoAttuale AS
+    SELECT idAsta, MAX(importo) AS puntataPiùAlta
+    FROM PUNTATA
+    GROUP BY idAsta;
 
 -- TUTTI GLI UTENTI DEL SISTEMA
 CREATE OR REPLACE VIEW UTENTI AS
@@ -129,3 +141,14 @@ CREATE OR REPLACE VIEW UTENTI AS
     SELECT email, nomeCompleto, 'venditore' AS tipoUtente
     FROM VENDITORE
     ORDER BY email;
+
+-- MOSTRA LE ASTE ATTIVE CON IL PREZZO CORRENTE 
+CREATE OR REPLACE VIEW VistaAsteAttiveConPuntata AS
+SELECT a.idAsta, a.titolo, a.descrizione, a.luogo, a.foto, a.categoria, a.tipoAsta, a.dataScadenza, a.timer, a.sogliaMinimaSegreta, a.basePubblica, a.sogliaRialzo, a.StatoAsta, a.emailVenditore, 
+       MAX(p.importo) AS prezzoMassimo
+FROM ASTA a
+LEFT JOIN PUNTATA p ON a.idAsta = p.idAsta
+WHERE a.StatoAsta = 'in corso'
+GROUP BY a.idAsta, a.titolo, a.descrizione,a.luogo, a.foto, a.categoria, a.tipoAsta, a.dataScadenza, a.timer, a.sogliaMinimaSegreta, a.basePubblica, a.sogliaRialzo, a.StatoAsta, a.emailVenditore;
+
+    -----------------------------------------------------------------------------------

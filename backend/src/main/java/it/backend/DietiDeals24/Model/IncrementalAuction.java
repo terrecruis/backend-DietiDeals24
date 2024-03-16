@@ -1,18 +1,19 @@
 package it.backend.DietiDeals24.Model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class IncrementalAuction extends  Auction {
 
-    private Integer startingPrice;
+    private BigDecimal startingPrice;
 
-    private Float raisingThreshold;
+    private BigDecimal raisingThreshold;
 
-    private Date timer;
+    private Integer timer;
 
-    public IncrementalAuction(Seller creator, ArrayList<Buyer> partenecipants, String title, String description, String imageAuction, String category, String location, Integer startingPrice, Float raisingThreshold, Date timer) {
-        super(creator, partenecipants, title, description, imageAuction, category, location);
+    public IncrementalAuction(String id, Seller creator, ArrayList<Buyer> partenecipants, String title, String description, String imageAuction, String category, String location, BigDecimal startingPrice, BigDecimal raisingThreshold, Integer timer, BigDecimal currentPrice) {
+        super(id, creator, partenecipants, title, description, imageAuction, category, location, currentPrice);
         this.startingPrice = startingPrice;
         this.raisingThreshold = raisingThreshold;
         this.timer = timer;
@@ -20,28 +21,29 @@ public class IncrementalAuction extends  Auction {
 
 
     //all get
-    public Integer getStartingPrice() {
+    public BigDecimal getStartingPrice() {
         return startingPrice;
     }
 
-    public Float getRaisingThreshold() {
+    public BigDecimal getRaisingThreshold() {
         return raisingThreshold;
     }
 
-    public Date getTimer() {
+    public Integer getTimer() {
         return timer;
     }
 
+
     //all set
-    public void setStartingPrice(Integer startingPrice) {
+    public void setStartingPrice(BigDecimal startingPrice) {
         this.startingPrice = startingPrice;
     }
 
-    public void setRaisingThreshold(Float raisingThreshold) {
+    public void setRaisingThreshold(BigDecimal raisingThreshold) {
         this.raisingThreshold = raisingThreshold;
     }
 
-    public void setTimer(Date timer) {
+    public void setTimer(Integer timer) {
         this.timer = timer;
     }
 }

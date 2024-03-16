@@ -1,9 +1,11 @@
 package it.backend.DietiDeals24.Model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public abstract class Auction {
 
+    private String Id;
     private Seller creator;
     
     private ArrayList<Buyer> participants;
@@ -18,9 +20,11 @@ public abstract class Auction {
 
     private String location;
 
+    private BigDecimal currentPrice;
 
     //full constructor
-    protected Auction(Seller creator, ArrayList<Buyer> partenecipants, String title, String description, String imageAuction, String category, String location) {
+    protected Auction(String Id, Seller creator, ArrayList<Buyer> partenecipants, String title, String description, String imageAuction, String category, String location, BigDecimal currentPrice) {
+        this.Id = Id;
         this.creator = creator;
         this.participants = partenecipants;
         this.title = title;
@@ -28,10 +32,18 @@ public abstract class Auction {
         this.imageAuction = imageAuction;
         this.category = category;
         this.location = location;
+        this.currentPrice = currentPrice;
     }
 
 
     //all get
+    public BigDecimal getCurrentPrice() {
+        return currentPrice;
+    }
+
+    public String getId() {
+        return Id;
+    }
     public Seller getCreator() {
         return creator;
     }
@@ -63,6 +75,12 @@ public abstract class Auction {
 
 
     //all set
+    public void setCurrentPrice(BigDecimal currentPrice) {
+        this.currentPrice = currentPrice;
+    }
+    public void setId(String Id) {
+        this.Id = Id;
+    }
     public void setCreator(Seller creator) {
         this.creator = creator;
     }
