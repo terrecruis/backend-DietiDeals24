@@ -8,10 +8,10 @@ import java.util.List;
 
 public class AuctionService {
 
-    final AuctionDAO auction = new AuctionPostgresDAO();
+    final AuctionDAO<Auction> auction = new AuctionPostgresDAO();
 
     public AuctionService() {
-        //TODO Qui vanno inserite le chiamate per fare aggiornare il database.
+        auction.updateStatusAuctionsDAO();
     }
 
     public List<Auction> getAuctionsService() {

@@ -8,6 +8,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+//TODO: remember to change this class with JWT Authentication
 @Priority(3)
 @Path("/auth")
 public class AuthController {

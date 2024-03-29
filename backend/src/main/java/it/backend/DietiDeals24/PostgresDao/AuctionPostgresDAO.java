@@ -47,8 +47,6 @@ public class AuctionPostgresDAO implements AuctionDAO<Auction> {
         return auctions;
     }
 
-
-
     @Override
     public List<Auction> searchAuctionsDAO(String toSearch, String startPrice, String endingPrice, String category) {
         List<Auction> auctions = new ArrayList<>();
@@ -92,9 +90,6 @@ public class AuctionPostgresDAO implements AuctionDAO<Auction> {
         }
         return auctions;
     }
-
-
-
 
     @Override
     public List<Auction> getMyAuctionsBuyerDAO(String email) {
@@ -150,7 +145,22 @@ public class AuctionPostgresDAO implements AuctionDAO<Auction> {
     }
 
 
+    /*
+    * Sfrutta le procedure di aggiornamento a cascata implementate nel datbase
+    * cosi da alleggerire il carico di lavoro del server e migliorare le prestazioni.
+    * Non solo aggiorna lo stato delle aste ma anche le notifiche associate ad un asta specifica.
+    */
+    @Override
+    public boolean updateStatusAuctionsDAO() {
+        query = "CALL aggiornastatoasta()";
 
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            int state = statement.executeUpdate();
+            return state > 0;
+        } catch (SQLException e) {
+            throw new QueryExecutionException("Errore durante l'aggiornamento dello stato delle aste", e);
+        }
+    }
 
 
     // This method is used to create an auction from a result set

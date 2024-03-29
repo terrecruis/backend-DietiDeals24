@@ -3,6 +3,9 @@ import java.util.List;
 
 public interface AuctionDAO<T> {
 
+
+    public boolean updateStatusAuctionsDAO();
+
     public List<T> getAuctionsDAO();
 
     public List<T> searchAuctionsDAO(String toSearch, String startPrice, String endingPrice, String category );

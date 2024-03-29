@@ -38,5 +38,24 @@ public class AuthService {
         }
     }
 
+    public boolean upgradePremiumAccountService(String json) {
+        try(JsonReader reader = Json.createReader(new StringReader(json))) {
+            JsonObject jsonObject = reader.readObject();
+
+            // Extracting values from JsonObject
+            String email = jsonObject.getString("email");
+            String fullname = jsonObject.getString("fullname");
+            String telephoneNumber = jsonObject.getString("telephoneNumber");
+
+            return account.upgradePremiumAccountDAO(email, fullname, telephoneNumber);
+        }
+        catch (QueryExecutionException e) {
+            return false;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+
 }
 
