@@ -1,14 +1,16 @@
 package it.backend.DietiDeals24.Model;
 
+import java.math.BigDecimal;
+
 public class Bet {
 
     private Buyer buyerAssociated;
 
     private Auction auctionAssociated;
 
-    private Integer betValue;
+    private BigDecimal betValue;
 
-    public Bet(Buyer buyerAssociated, Auction auctionAssociated, Integer betValue) {
+    public Bet(Buyer buyerAssociated, Auction auctionAssociated, BigDecimal betValue) {
     	this.buyerAssociated = buyerAssociated;
     	this.auctionAssociated = auctionAssociated;
     	this.betValue = betValue;
@@ -22,7 +24,7 @@ public class Bet {
     	return this.auctionAssociated;
     }
 
-    public Integer getBetValue() {
+    public BigDecimal getBetValue() {
     	return this.betValue;
     }
 
@@ -34,7 +36,7 @@ public class Bet {
     	this.auctionAssociated = auctionAssociated;
     }
 
-    public void setBetValue(Integer betValue) {
+    public void setBetValue(BigDecimal betValue) {
     	this.betValue = betValue;
     }
 }

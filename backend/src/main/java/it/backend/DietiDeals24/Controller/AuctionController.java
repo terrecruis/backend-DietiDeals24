@@ -45,6 +45,4 @@ public class AuctionController {
         return service.getAuctionsByCategoryAndPriceService(toSearch, startingPrice, endingPrice, category);
     }
 
-
-
 }

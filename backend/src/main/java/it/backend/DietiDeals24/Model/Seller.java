@@ -1,26 +1,24 @@
 package it.backend.DietiDeals24.Model;
-
-import java.util.ArrayList;
+import java.util.List;
 
 public class Seller extends Account {
 
-    private ArrayList<Auction> auctionsGenerated;
+    private List<Auction> auctionsGenerated;
 
 
     public Seller(String email) {
         super(email);
     }
-    public Seller(String fullName, String imageAccount, String email, String password, String description, Integer telephoneNumber, String country, String AuctionsGenerated) {
-        super(fullName, imageAccount, email, password, description, telephoneNumber, country);
-        this.auctionsGenerated = new ArrayList<Auction>();
-    }
 
+    public Seller(String fullName, String imageAccount, String email, String description, Integer telephoneNumber, String country) {
+        super(fullName, imageAccount, email, description, telephoneNumber, country);
+    }
     //get and set
-    public ArrayList<Auction> getAuctionsGenerated() {
+    public List<Auction> getAuctionsGenerated() {
         return auctionsGenerated;
     }
 
-    public void setAuctionsGenerated(ArrayList<Auction> auctionsGenerated) {
+    public void setAuctionsGenerated(List<Auction> auctionsGenerated) {
         this.auctionsGenerated = auctionsGenerated;
     }
 

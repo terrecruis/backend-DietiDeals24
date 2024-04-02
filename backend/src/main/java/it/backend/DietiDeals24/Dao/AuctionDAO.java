@@ -4,14 +4,14 @@ import java.util.List;
 public interface AuctionDAO<T> {
 
 
-    public boolean updateStatusAuctionsDAO();
+    void updateStatusAuctionsDAO();
 
-    public List<T> getAuctionsDAO();
+    List<T> getAuctionsDAO();
 
-    public List<T> searchAuctionsDAO(String toSearch, String startPrice, String endingPrice, String category );
+    List<T> searchAuctionsDAO(String toSearch, String startPrice, String endingPrice, String category );
 
-    public List<T> getMyAuctionsBuyerDAO(String email);
+    List<T> getMyAuctionsBuyerDAO(String email);
 
-    public List<T> getMyAuctionsSellerDAO(String email);
+    List<T> getMyAuctionsSellerDAO(String email);
 
 }

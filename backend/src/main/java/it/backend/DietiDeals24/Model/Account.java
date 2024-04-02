@@ -1,22 +1,18 @@
 package it.backend.DietiDeals24.Model;
-
 import java.util.ArrayList;
-import java.util.List;
 import java.util.List;
 
 public abstract class  Account {
 
     private ArrayList<Notification> notifications;
 
-    private ArrayList<SocialLink> socialLinks;
+    private ArrayList<SocialLink> socialLinks = new ArrayList<>();
 
     private String fullName;
 
     private String imageAccount;
 
     private String email;
-
-    private String password;
 
     private String description;
 
@@ -26,21 +22,19 @@ public abstract class  Account {
 
 
     //full constructor
-    protected Account(String fullName, String imageAccount, String email, String password, String description, Integer telephoneNumber, String country) {
+    protected Account(String fullName, String imageAccount, String email, String description, Integer telephoneNumber, String country) {
         this.fullName = fullName;
         this.imageAccount = imageAccount;
         this.email = email;
-        this.password = password;
         this.description = description;
         this.telephoneNumber = telephoneNumber;
         this.country = country;
     }
 
     //starting constructor
-    protected Account(String fullName, Integer telephoneNumber, String email, String password) {
+    protected Account(String fullName, Integer telephoneNumber, String email) {
         this.fullName = fullName;
         this.email = email;
-        this.password = password;
         this.telephoneNumber = telephoneNumber;
     }
 
@@ -59,10 +53,6 @@ public abstract class  Account {
 
     public String getEmail() {
         return email;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public String getDescription() {
@@ -89,10 +79,6 @@ public abstract class  Account {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public void setDescription(String description) {

@@ -50,36 +50,11 @@ public class AuctionPostgresDAO implements AuctionDAO<Auction> {
     @Override
     public List<Auction> searchAuctionsDAO(String toSearch, String startPrice, String endingPrice, String category) {
         List<Auction> auctions = new ArrayList<>();
-        query = "SELECT * FROM VistaAsteAttiveConPuntata WHERE 1=1";
-
-        if (toSearch != null && !toSearch.isEmpty()) {
-            query += " AND titolo ILIKE ?";
-        }
-
-        if (startPrice != null && !startPrice.isEmpty() && endingPrice != null && !endingPrice.isEmpty()) {
-            query += " AND prezzoMassimo BETWEEN ? AND ?";
-        }
-
-        if (category != null && !category.isEmpty()) {
-            query += " AND categoria ILIKE ?";
-        }
-        System.out.println("La query1 è : " + query);
+        query = buildQuery(toSearch, startPrice, endingPrice, category);
+        System.out.println("La query è: " + query);
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            int parameterIndex = 1;
-            if (toSearch != null && !toSearch.isEmpty()) {
-                statement.setString(parameterIndex++, "%" + toSearch + "%");
-            }
-
-            if (startPrice != null && !startPrice.isEmpty() && endingPrice != null && !endingPrice.isEmpty()) {
-                statement.setBigDecimal(parameterIndex++, new BigDecimal(startPrice));
-                statement.setBigDecimal(parameterIndex++, new BigDecimal(endingPrice));
-            }
-
-            if (category != null && !category.isEmpty()) {
-                statement.setString(parameterIndex++, "%" + category + "%");
-            }
-
+            setParameters(statement, toSearch, startPrice, endingPrice, category);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
@@ -90,6 +65,42 @@ public class AuctionPostgresDAO implements AuctionDAO<Auction> {
         }
         return auctions;
     }
+
+    private String buildQuery(String toSearch, String startPrice, String endingPrice, String category) {
+        StringBuilder queryBuilder = new StringBuilder("SELECT * FROM VistaAsteAttiveConPuntata WHERE 1=1");
+
+        if (toSearch != null && !toSearch.isEmpty()) {
+            queryBuilder.append(" AND titolo ILIKE ?");
+        }
+
+        if (startPrice != null && !startPrice.isEmpty() && endingPrice != null && !endingPrice.isEmpty()) {
+            queryBuilder.append(" AND prezzoMassimo BETWEEN ? AND ?");
+        }
+
+        if (category != null && !category.isEmpty()) {
+            queryBuilder.append(" AND categoria ILIKE ?");
+        }
+
+        return queryBuilder.toString();
+    }
+
+    private void setParameters(PreparedStatement statement, String toSearch, String startPrice, String endingPrice, String category) throws SQLException {
+        int parameterIndex = 1;
+
+        if (toSearch != null && !toSearch.isEmpty()) {
+            statement.setString(parameterIndex++, "%" + toSearch + "%");
+        }
+
+        if (startPrice != null && !startPrice.isEmpty() && endingPrice != null && !endingPrice.isEmpty()) {
+            statement.setBigDecimal(parameterIndex++, new BigDecimal(startPrice));
+            statement.setBigDecimal(parameterIndex++, new BigDecimal(endingPrice));
+        }
+
+        if (category != null && !category.isEmpty()) {
+            statement.setString(parameterIndex++, "%" + category + "%");
+        }
+    }
+
 
     @Override
     public List<Auction> getMyAuctionsBuyerDAO(String email) {
@@ -151,12 +162,11 @@ public class AuctionPostgresDAO implements AuctionDAO<Auction> {
     * Non solo aggiorna lo stato delle aste ma anche le notifiche associate ad un asta specifica.
     */
     @Override
-    public boolean updateStatusAuctionsDAO() {
+    public void updateStatusAuctionsDAO() {
         query = "CALL aggiornastatoasta()";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            int state = statement.executeUpdate();
-            return state > 0;
+            statement.executeUpdate();
         } catch (SQLException e) {
             throw new QueryExecutionException("Errore durante l'aggiornamento dello stato delle aste", e);
         }

@@ -3,6 +3,9 @@ import it.backend.DietiDeals24.Dao.AccountDAO;
 import it.backend.DietiDeals24.DbConnection.DbConnection;
 import it.backend.DietiDeals24.Exception.QueryExecutionException;
 import it.backend.DietiDeals24.Model.Account;
+import it.backend.DietiDeals24.Model.Seller;
+import it.backend.DietiDeals24.Model.SocialLink;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,7 +28,6 @@ public class AccountPostgresDAO implements AccountDAO<Account> {
     @Override
     public boolean addAccountDAO(String email, String fullname, String telephoneNumber) {
         query = "INSERT INTO compratore (email, nomeCompleto, telephoneNumber) VALUES (?, ?, ?)";
-
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, email);
             statement.setString(2, fullname);
@@ -38,39 +40,21 @@ public class AccountPostgresDAO implements AccountDAO<Account> {
     }
 
     @Override
-    public boolean updateToSellerMode(String email) {
-        query = "SELECT email, nomeCompleto, telephoneNumber FROM compratore WHERE email = ?";
-
-        //esegui la query e inserisci i risulati all'interno della tabaella venditore
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, email);
-            int state = statement.executeUpdate();
-            return state > 0;
-        } catch (SQLException e) {
-            throw new QueryExecutionException("problema aggiunta utente nel database!", e);
-        }
-    }
-
-
-    @Override
     public boolean upgradePremiumAccountDAO(String email, String fullName, String telephoneNumber) {
-        // Verifica prima se l'account è già presente nella tabella venditore
         String selectQuery = "SELECT email FROM venditore WHERE email = ?";
         try (PreparedStatement selectStatement = connection.prepareStatement(selectQuery)) {
             selectStatement.setString(1, email);
             try (ResultSet resultSet = selectStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    // L'account è già presente nella tabella venditore, quindi non è necessario fare nulla
-                    return true; // Indica che l'account è già aggiornato a premium
+                    return true;
                 } else {
-                    // L'account non è presente nella tabella venditore, quindi lo aggiungo
                     String insertQuery = "INSERT INTO venditore (email, nomeCompleto, telephoneNumber) VALUES (?, ?, ?)";
                     try (PreparedStatement insertStatement = connection.prepareStatement(insertQuery)) {
                         insertStatement.setString(1, email);
                         insertStatement.setString(2, fullName);
                         insertStatement.setString(3, telephoneNumber);
                         int rowsAffected = insertStatement.executeUpdate();
-                        return rowsAffected > 0; // Ritorna true se almeno una riga è stata aggiunta
+                        return rowsAffected > 0;
                     }
                 }
             }
@@ -81,9 +65,71 @@ public class AccountPostgresDAO implements AccountDAO<Account> {
 
 
 
+    @Override
+    public boolean updateInfoSellerAccountDAO(String email, String fullName, String telephoneNumber, String country, String description, String link1, String link2) {
+        query = "UPDATE venditore SET nomeCompleto = ?, telephoneNumber = ?, nazionalita = ?, descrizione = ?, link1 = ?, link2 = ? WHERE email = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            setPreparedStatementParams(statement, fullName, telephoneNumber, country, description, link1, link2, email);
+            int state = statement.executeUpdate();
+            return state > 0;
+        } catch (SQLException e) {
+            throw new QueryExecutionException("problema aggiornamento utente nel database!", e);
+        }
+    }
+
+    @Override
+    public boolean updateInfoBuyerAccountDAO(String email, String fullName, String telephoneNumber, String country, String description, String link1, String link2) {
+        query = "UPDATE compratore SET nomeCompleto = ?, telephoneNumber = ?, nazionalita = ?, descrizione = ?, link1 = ?, link2 = ? WHERE email = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            setPreparedStatementParams(statement, fullName, telephoneNumber, country, description, link1, link2, email);
+            int state = statement.executeUpdate();
+            return state > 0;
+        } catch (SQLException e) {
+            throw new QueryExecutionException("problema aggiornamento utente nel database!", e);
+        }
+    }
+
 
     @Override
     public Account getInfoAccountDAO(String email) {
-        return null;
+        query = "SELECT * FROM venditore WHERE email = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, email);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    String emailAccount = resultSet.getString("email");
+                    String fullName = resultSet.getString("nomeCompleto");
+                    String foto = resultSet.getString("foto");
+                    int telephoneNumber = resultSet.getInt("telephoneNumber");
+                    String description = resultSet.getString("descrizione");
+                    String country = resultSet.getString("nazionalita");
+                    String link1 = resultSet.getString("link1");
+                    String link2 = resultSet.getString("link2");
+                    System.out.println("email: " + emailAccount);
+
+                    Account seller = new Seller(fullName, foto, emailAccount, description, telephoneNumber, country);
+                    seller.addSocialLink(new SocialLink(link1));
+                    seller.addSocialLink(new SocialLink(link2));
+                    return seller;
+
+                } else {
+                    return null;
+                }
+            }
+        } catch (SQLException e) {
+            throw new QueryExecutionException("problema aggiunta utente nel database!", e);
+        }
+    }
+
+
+
+    private void setPreparedStatementParams(PreparedStatement statement, String fullName, String telephoneNumber, String country, String description, String link1, String link2, String email) throws SQLException {
+        statement.setString(1, fullName);
+        statement.setString(2, telephoneNumber);
+        statement.setString(3, country);
+        statement.setString(4, description);
+        statement.setString(5, link1);
+        statement.setString(6, link2);
+        statement.setString(7, email);
     }
 }
