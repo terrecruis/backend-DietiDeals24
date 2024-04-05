@@ -1,8 +1,8 @@
 package it.backend.DietiDeals24.DbConnection;
-
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -10,7 +10,7 @@ import java.util.Properties;
 
 public class DbConnection {
 
-    private static DbConnection istanza;
+    private static DbConnection instance;
 
     private Connection connection = null;
 
@@ -32,18 +32,14 @@ public class DbConnection {
 
     private void loadDatabaseProprieties() {
         Properties prop = new Properties();
-        try (InputStream input = new FileInputStream("database.properties")) {
-            if (input == null) {
-                System.out.println("Impossibile trovare il file database.properties");
-                return;
-            }
+        try (InputStream input = Files.newInputStream(Paths.get("configuration.properties"))) {
             prop.load(input);
             url = prop.getProperty("db.url");
             nome = prop.getProperty("db.username");
             password = prop.getProperty("db.password");
             driver = prop.getProperty("db.driver");
         } catch (IOException ex) {
-            System.out.println("Errore durante la lettura del file database.properties");
+            System.out.println("Errore durante la lettura del file configuration.properties");
             ex.printStackTrace();
         }
     }
@@ -53,12 +49,10 @@ public class DbConnection {
     }
 
     public static DbConnection getInstance() throws SQLException {
-        if (istanza == null) {
-            istanza = new DbConnection();
-        } else if (istanza.getConnection().isClosed()) {
-            istanza = new DbConnection();
+        if (instance == null || instance.getConnection().isClosed()) {
+            instance = new DbConnection();
         }
-        return istanza;
+        return instance;
     }
 }
 

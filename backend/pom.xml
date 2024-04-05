@@ -44,11 +44,18 @@
         </dependency>
 
         <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>4.4.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
             <version>${junit-jupiter.version}</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
@@ -59,6 +66,20 @@
 
     <build>
         <plugins>
+
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.9.1.2184</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>sonar</goal>
+                        </goals>
+                        <phase>verify</phase>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -90,6 +111,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.1</version>
             </plugin>
+
         </plugins>
     </build>
 
@@ -98,5 +120,20 @@
         <junit-jupiter.version>5.10.0</junit-jupiter.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <surefire.mvn.plugin.version>3.2.1</surefire.mvn.plugin.version>
+
+        <project.build.sorceEncoding>UTF-8</project.build.sorceEncoding>
+        <project.repoting.outputEncoding>UTF-8</project.repoting.outputEncoding>
+        <log4j2.version>2.14.1</log4j2.version>
+        <sonarproject.key>INGSW</sonarproject.key>
+        <!--
+        Bisogna nascondere questo codice all'interno del file di configurazione!
+        <sonar.login></sonar.login>
+        -->
+        <sonar.host.url>http://localhost:9000</sonar.host.url>
+
     </properties>
+
 </project>
+
+
+

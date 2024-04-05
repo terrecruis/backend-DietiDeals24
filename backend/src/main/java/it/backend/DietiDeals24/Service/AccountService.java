@@ -3,6 +3,7 @@ import it.backend.DietiDeals24.Dao.AccountDAO;
 import it.backend.DietiDeals24.Model.Account;
 import it.backend.DietiDeals24.PostgresDao.AccountPostgresDAO;
 import jakarta.json.Json;
+import jakarta.json.JsonException;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
 import java.io.StringReader;
@@ -19,6 +20,16 @@ public class AccountService {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public String getUsernameFromJson(String json) {
+        try {
+            JsonObject jsonObject = parseJson(json);
+            return jsonObject.getString("username");
+        } catch (JsonException | IllegalArgumentException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

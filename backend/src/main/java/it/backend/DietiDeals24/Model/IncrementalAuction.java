@@ -1,6 +1,7 @@
 package it.backend.DietiDeals24.Model;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 
 public class IncrementalAuction extends  Auction {
 
@@ -10,7 +11,7 @@ public class IncrementalAuction extends  Auction {
 
     private Integer timer;
 
-    public IncrementalAuction(String id, Seller creator, ArrayList<Buyer> partenecipants, String title, String description, String imageAuction, String category, String location, BigDecimal startingPrice, BigDecimal raisingThreshold, Integer timer, BigDecimal currentPrice) {
+    public IncrementalAuction(String id, Seller creator, List<Buyer> partenecipants, String title, String description, String imageAuction, String category, String location, BigDecimal startingPrice, BigDecimal raisingThreshold, Integer timer, BigDecimal currentPrice) {
         super(id, creator, partenecipants, title, description, imageAuction, category, location, currentPrice);
         this.startingPrice = startingPrice;
         this.raisingThreshold = raisingThreshold;

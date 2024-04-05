@@ -4,7 +4,6 @@ import it.backend.DietiDeals24.DbConnection.DbConnection;
 import it.backend.DietiDeals24.Exception.QueryExecutionException;
 import it.backend.DietiDeals24.Model.Buyer;
 import it.backend.DietiDeals24.Model.Notification;
-import it.backend.DietiDeals24.Model.Seller;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,9 +14,7 @@ import java.util.List;
 
 public class NotificationPostgresDAO implements NotificationDAO<Notification> {
 
-    String query;
-
-    Connection connection;
+    private Connection connection;
 
     public NotificationPostgresDAO() {
         try {
@@ -27,17 +24,8 @@ public class NotificationPostgresDAO implements NotificationDAO<Notification> {
         }
     }
 
-
-
-
-    @Override
-    public List<Notification> getNotificationBuyerDAO(String email) {
+    private List<Notification> getNotificationsByQuery(String query, String email) {
         List<Notification> notifications = new ArrayList<>();
-
-         query = "SELECT titoloAsta, descrizione, tempo, immagine " +
-                "FROM NOTIFICA " +
-                "WHERE emailCompratore = ? " +
-                "ORDER BY tempo DESC";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, email);
@@ -59,35 +47,24 @@ public class NotificationPostgresDAO implements NotificationDAO<Notification> {
         return notifications;
     }
 
+    @Override
+    public List<Notification> getNotificationBuyerDAO(String email) {
+        String query = "SELECT titoloAsta, descrizione, tempo, immagine " +
+                "FROM NOTIFICA " +
+                "WHERE emailCompratore = ? " +
+                "ORDER BY tempo DESC";
+
+        return getNotificationsByQuery(query, email);
+    }
 
     @Override
     public List<Notification> getNotificationSellerDAO(String email) {
-        List<Notification> notifications = new ArrayList<>();
-
-         query = "SELECT titoloAsta, descrizione, tempo, immagine " +
+        String query = "SELECT titoloAsta, descrizione, tempo, immagine " +
                 "FROM NOTIFICA " +
                 "WHERE emailVenditore = ? AND emailCompratore IS NULL " +
                 "ORDER BY tempo DESC";
 
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, email);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    String title = resultSet.getString("titoloAsta");
-                    String status = resultSet.getString("descrizione");
-                    Date time = resultSet.getDate("tempo");
-                    String image = resultSet.getString("immagine");
-
-                    Notification notification = new Notification(new Seller(email), image, status, title, time);
-                    notifications.add(notification);
-                }
-            }
-        } catch (SQLException e) {
-            throw new QueryExecutionException("Errore durante il recupero delle notifiche dal database", e);
-        }
-
-        return notifications;
+        return getNotificationsByQuery(query, email);
     }
-
 
 }

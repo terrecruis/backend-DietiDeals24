@@ -1,6 +1,5 @@
 package it.backend.DietiDeals24.Service;
 import it.backend.DietiDeals24.Dao.BetDao;
-import it.backend.DietiDeals24.Model.Bet;
 import it.backend.DietiDeals24.PostgresDao.BetPostgresDAO;
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
@@ -11,7 +10,7 @@ import java.math.BigDecimal;
 
 public class BetService {
 
-    final BetDao<Bet> betDao = new BetPostgresDAO();
+    final BetDao betDao = new BetPostgresDAO();
 
 
     public boolean makeBetService(String json) {

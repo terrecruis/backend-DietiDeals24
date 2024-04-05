@@ -1,5 +1,6 @@
 package it.backend.DietiDeals24.Controller;
 import it.backend.DietiDeals24.Service.AccountService;
+import it.backend.DietiDeals24.filter.RequireJWTAuthentication;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -10,6 +11,7 @@ public class AccountController {
     final AccountService service = new AccountService();
 
     @POST
+    @RequireJWTAuthentication
     @Path("/user")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -26,6 +28,7 @@ public class AccountController {
 
     @POST
     @Path("/premiumSeller")
+    @RequireJWTAuthentication
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response upgradePremiumAccount(String json) {
@@ -39,6 +42,7 @@ public class AccountController {
 
     @GET
     @Path("/info/{email}")
+    @RequireJWTAuthentication
     @Produces(MediaType.APPLICATION_JSON)
     public Response getInfoAccount(@PathParam("email") String email) {
         return Response.ok(service.getInfoAccountService(email)).build();
@@ -48,6 +52,7 @@ public class AccountController {
     //funzione per modifica del profilo
     @PUT
     @Path("/{accountType}/modifyAccount")
+    @RequireJWTAuthentication
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateInfoAccount(String json, @PathParam("accountType") String accountType) {

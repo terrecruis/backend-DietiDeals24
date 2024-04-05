@@ -1,5 +1,4 @@
 package it.backend.DietiDeals24.Dao;
-
 import java.util.List;
 
 public interface NotificationDAO<T> {

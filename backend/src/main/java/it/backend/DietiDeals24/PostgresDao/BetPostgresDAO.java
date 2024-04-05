@@ -2,14 +2,13 @@ package it.backend.DietiDeals24.PostgresDao;
 import it.backend.DietiDeals24.Dao.BetDao;
 import it.backend.DietiDeals24.DbConnection.DbConnection;
 import it.backend.DietiDeals24.Exception.QueryExecutionException;
-import it.backend.DietiDeals24.Model.Bet;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 
-public class BetPostgresDAO implements BetDao<Bet> {
+public class BetPostgresDAO implements BetDao {
 
     Connection connection;
 

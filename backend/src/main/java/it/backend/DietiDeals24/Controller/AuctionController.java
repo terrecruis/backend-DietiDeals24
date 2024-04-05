@@ -1,6 +1,7 @@
 package it.backend.DietiDeals24.Controller;
 import it.backend.DietiDeals24.Model.Auction;
 import it.backend.DietiDeals24.Service.AuctionService;
+import it.backend.DietiDeals24.filter.RequireJWTAuthentication;
 import jakarta.ws.rs.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ public class AuctionController {
     List<Auction> auctions = new ArrayList<>();
 
     @GET
+
     @Path("/home")
     @Produces("application/json")
     public List<Auction> getAuctions() {
@@ -20,6 +22,7 @@ public class AuctionController {
     }
 
     @GET
+    @RequireJWTAuthentication
     @Path("/{email}/buyer/myAuction")
     @Produces("application/json")
     public List<Auction> getMyAuctionsBuyer(@PathParam("email") String email) {
@@ -27,6 +30,7 @@ public class AuctionController {
     }
 
     @GET
+    @RequireJWTAuthentication
     @Path("/{email}/seller/myAuction")
     @Produces("application/json")
     public List<Auction> getMyAuctionsSeller(@PathParam("email") String email) {
@@ -35,6 +39,7 @@ public class AuctionController {
 
 
     @GET
+    @RequireJWTAuthentication
     @Path("/home/search")
     @Produces("application/json")
     public List<Auction> getAuctionsByCategoryAndPrice(

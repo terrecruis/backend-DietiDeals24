@@ -27,6 +27,10 @@ public class AccountPostgresDAO implements AccountDAO<Account> {
 
     @Override
     public boolean addAccountDAO(String email, String fullname, String telephoneNumber) {
+        if (userExistsWithEmail(email)) {
+            return true;
+        }
+
         query = "INSERT INTO compratore (email, nomeCompleto, telephoneNumber) VALUES (?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, email);
@@ -38,6 +42,23 @@ public class AccountPostgresDAO implements AccountDAO<Account> {
             throw new QueryExecutionException("problema aggiunta utente nel database!", e);
         }
     }
+
+    private boolean userExistsWithEmail(String email) {
+        query = "SELECT COUNT(*) FROM compratore WHERE email = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, email);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
+                    return count > 0;
+                }
+            }
+        } catch (SQLException e) {
+            throw new QueryExecutionException("Errore durante la verifica dell'esistenza dell'utente nel database", e);
+        }
+        return false;
+    }
+
 
     @Override
     public boolean upgradePremiumAccountDAO(String email, String fullName, String telephoneNumber) {

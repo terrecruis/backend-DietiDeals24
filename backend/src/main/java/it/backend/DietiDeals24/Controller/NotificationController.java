@@ -1,6 +1,7 @@
 package it.backend.DietiDeals24.Controller;
 import it.backend.DietiDeals24.Model.Notification;
 import it.backend.DietiDeals24.Service.NotificationService;
+import it.backend.DietiDeals24.filter.RequireJWTAuthentication;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
@@ -16,6 +17,7 @@ public class NotificationController {
 
 
     @GET
+    @RequireJWTAuthentication
     @Path("/{email}/buyer")
     @Produces("application/json")
     public List<Notification> getNotificationBuyer(@PathParam("email") String email) {
@@ -24,6 +26,7 @@ public class NotificationController {
 
 
     @GET
+    @RequireJWTAuthentication
     @Path("/{email}/seller")
     @Produces("application/json")
     public List<Notification> getNotificationSeller(@PathParam("email") String email) {

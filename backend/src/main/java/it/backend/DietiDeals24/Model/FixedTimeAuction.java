@@ -3,6 +3,7 @@ package it.backend.DietiDeals24.Model;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class FixedTimeAuction extends Auction {
 
@@ -11,7 +12,7 @@ public class FixedTimeAuction extends Auction {
     private BigDecimal minimumSecretThreshold;
 
 
-    public FixedTimeAuction(String id, Seller creator, ArrayList<Buyer> partenecipants, String title, String description, String imageAuction, String category, String location, Date endOfAuction, BigDecimal minimumSecretThreshold, BigDecimal currentPrice) {
+    public FixedTimeAuction(String id, Seller creator, List<Buyer> partenecipants, String title, String description, String imageAuction, String category, String location, Date endOfAuction, BigDecimal minimumSecretThreshold, BigDecimal currentPrice) {
         super(id, creator, partenecipants, title, description, imageAuction, category, location, currentPrice);
         this.endOfAuction = endOfAuction;
         this.minimumSecretThreshold = minimumSecretThreshold;
