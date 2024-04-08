@@ -5,7 +5,6 @@ import it.backend.DietiDeals24.Exception.QueryExecutionException;
 import it.backend.DietiDeals24.Model.Account;
 import it.backend.DietiDeals24.Model.Seller;
 import it.backend.DietiDeals24.Model.SocialLink;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

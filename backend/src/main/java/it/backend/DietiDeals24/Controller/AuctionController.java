@@ -13,7 +13,7 @@ public class AuctionController {
     List<Auction> auctions = new ArrayList<>();
 
     @GET
-
+    @RequireJWTAuthentication
     @Path("/home")
     @Produces("application/json")
     public List<Auction> getAuctions() {

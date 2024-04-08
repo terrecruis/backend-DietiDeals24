@@ -1,5 +1,4 @@
 package it.backend.DietiDeals24.Model;
-
 import java.util.Date;
 
 public class Notification {

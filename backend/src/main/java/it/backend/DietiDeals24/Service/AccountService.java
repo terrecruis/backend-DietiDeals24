@@ -15,7 +15,7 @@ public class AccountService {
     public boolean addAccountService(String json) {
         try {
             JsonObject jsonObject = parseJson(json);
-            String[] fields = extractFields(jsonObject);
+            String[] fields = extractMainFields(jsonObject);
             return account.addAccountDAO(fields[0], fields[1], fields[2]);
         } catch (Exception e) {
             e.printStackTrace();
@@ -26,7 +26,7 @@ public class AccountService {
     public String getUsernameFromJson(String json) {
         try {
             JsonObject jsonObject = parseJson(json);
-            return jsonObject.getString("username");
+            return jsonObject.getString("email");
         } catch (JsonException | IllegalArgumentException e) {
             e.printStackTrace();
             return null;
@@ -36,7 +36,7 @@ public class AccountService {
     public boolean upgradePremiumAccountService(String json) {
         try {
             JsonObject jsonObject = parseJson(json);
-            String[] fields = extractFields(jsonObject);
+            String[] fields = extractMainFields(jsonObject);
             return account.upgradePremiumAccountDAO(fields[0], fields[1], fields[2]);
         } catch (Exception e) {
             return false;
@@ -65,7 +65,8 @@ public class AccountService {
 
 
 
-    private String[] extractFields(JsonObject jsonObject) {
+    // the main fields are email, fullname and telephoneNumber
+    private String[] extractMainFields(JsonObject jsonObject) {
         String email = jsonObject.getString("email");
         String fullname = jsonObject.getString("fullname");
         String telephoneNumber = jsonObject.getString("telephoneNumber");
@@ -75,7 +76,7 @@ public class AccountService {
 
 
     private String[] extractAllAccountFields(JsonObject jsonObject) {
-        String[] fields = extractFields(jsonObject);
+        String[] fields = extractMainFields(jsonObject);
         String country = jsonObject.getString("nationality");
         String description = jsonObject.getString("description");
         String link1 = jsonObject.getString("link1");

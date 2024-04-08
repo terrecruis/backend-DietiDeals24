@@ -58,12 +58,12 @@ public class AuthController {
     @POST
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response login(String json) {
         try {
-            String username = accountService.getUsernameFromJson(json);
+            String email = accountService.getUsernameFromJson(json);
             if (accountService.addAccountService(json)) {
-                String token = createJWT(username, TimeUnit.DAYS.toMillis(365)); // 1 year
+                String token = createJWT(email, TimeUnit.DAYS.toMillis(365)); // days
                 if(validateToken(token))
                     return Response.ok().entity(token).build();
                 else

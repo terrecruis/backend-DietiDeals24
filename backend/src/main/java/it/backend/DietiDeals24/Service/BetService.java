@@ -12,7 +12,6 @@ public class BetService {
 
     final BetDao betDao = new BetPostgresDAO();
 
-
     public boolean makeBetService(String json) {
 
         try(JsonReader jsonReader = Json.createReader(new StringReader(json))) {

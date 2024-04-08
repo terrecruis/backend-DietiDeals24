@@ -5,7 +5,6 @@ import it.backend.DietiDeals24.Exception.QueryExecutionException;
 import it.backend.DietiDeals24.Model.*;
 import it.backend.DietiDeals24.Model.FixedTimeAuction;
 import it.backend.DietiDeals24.Model.IncrementalAuction;
-
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

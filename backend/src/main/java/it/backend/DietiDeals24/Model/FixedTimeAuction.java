@@ -1,7 +1,5 @@
 package it.backend.DietiDeals24.Model;
-
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 

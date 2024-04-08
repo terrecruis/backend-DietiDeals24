@@ -1,5 +1,4 @@
 package it.backend.DietiDeals24.Controller;
-
 import it.backend.DietiDeals24.Service.BetService;
 import it.backend.DietiDeals24.filter.RequireJWTAuthentication;
 import jakarta.ws.rs.Consumes;
