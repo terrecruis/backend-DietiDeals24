@@ -14,7 +14,7 @@ import java.util.List;
 
 public class NotificationPostgresDAO implements NotificationDAO<Notification> {
 
-    private Connection connection;
+    private final Connection connection;
 
     public NotificationPostgresDAO() {
         try {

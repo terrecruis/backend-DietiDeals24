@@ -7,9 +7,11 @@ import jakarta.json.JsonException;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
 import java.io.StringReader;
+import java.util.logging.Logger;
 
 public class AccountService {
 
+    private static final Logger LOGGER = Logger.getLogger(AccountService.class.getName());
     private final AccountDAO<Account> account = new AccountPostgresDAO();
 
     public boolean addAccountService(String json) {
@@ -18,7 +20,7 @@ public class AccountService {
             String[] fields = extractMainFields(jsonObject);
             return account.addAccountDAO(fields[0], fields[1], fields[2]);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.severe("Errore durante l'aggiunta dell'account");
             return false;
         }
     }
@@ -28,7 +30,7 @@ public class AccountService {
             JsonObject jsonObject = parseJson(json);
             return jsonObject.getString("email");
         } catch (JsonException | IllegalArgumentException e) {
-            e.printStackTrace();
+            LOGGER.severe("Errore durante il parsing del JSON");
             return null;
         }
     }
@@ -39,6 +41,7 @@ public class AccountService {
             String[] fields = extractMainFields(jsonObject);
             return account.upgradePremiumAccountDAO(fields[0], fields[1], fields[2]);
         } catch (Exception e) {
+            LOGGER.severe("Errore durante l'upgrade dell'account");
             return false;
         }
     }
@@ -58,7 +61,7 @@ public class AccountService {
                 return account.updateInfoSellerAccountDAO(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6]);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.severe("Errore durante l'aggiornamento dell'account");
             return false;
         }
     }

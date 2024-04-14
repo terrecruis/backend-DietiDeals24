@@ -144,7 +144,7 @@ CREATE OR REPLACE VIEW UTENTI AS
 
 -- MOSTRA LE ASTE ATTIVE CON IL PREZZO CORRENTE 
 CREATE OR REPLACE VIEW VistaAsteAttiveConPuntata AS
-SELECT a.idAsta, a.titolo, a.descrizione, a.luogo, a.foto, a.categoria, a.tipoAsta, a.dataScadenza, a.timer, a.sogliaMinimaSegreta, a.basePubblica, a.sogliaRialzo, a.StatoAsta, a.emailVenditore, 
+SELECT a.idAsta, a.titolo, a.descrizione, a.luogo, a.foto, a.categoria, a.tipoAsta, TO_CHAR(a.dataScadenza, 'DD/MM/YYYY'), a.timer, a.sogliaMinimaSegreta, a.basePubblica, a.sogliaRialzo, a.StatoAsta, a.emailVenditore, 
        MAX(p.importo) AS prezzoMassimo
 FROM ASTA a
 LEFT JOIN PUNTATA p ON a.idAsta = p.idAsta

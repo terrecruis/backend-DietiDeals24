@@ -5,7 +5,6 @@ import it.backend.DietiDeals24.PostgresDao.AuctionPostgresDAO;
 import java.util.List;
 
 
-
 public class AuctionService {
 
     final AuctionDAO<Auction> auction = new AuctionPostgresDAO();

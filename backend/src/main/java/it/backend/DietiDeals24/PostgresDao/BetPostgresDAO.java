@@ -6,10 +6,12 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
+import java.util.logging.Logger;
+import static java.util.logging.Level.SEVERE;
 
 public class BetPostgresDAO implements BetDao {
 
+    private static final java.util.logging.Logger LOGGER = Logger.getLogger(BetPostgresDAO.class.getName());
     Connection connection;
 
     String query;
@@ -34,7 +36,7 @@ public class BetPostgresDAO implements BetDao {
             statement.executeUpdate();
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(SEVERE, "Errore durante la puntata ", e);
             return false;
         }
     }

@@ -16,6 +16,7 @@ import java.util.List;
 
 public class AuctionPostgresDAO implements AuctionDAO<Auction> {
 
+    private static final java.util.logging.Logger LOGGER = java.util.logging.Logger.getLogger(AuctionPostgresDAO.class.getName());
     Connection connection;
     String query;
 
@@ -41,7 +42,7 @@ public class AuctionPostgresDAO implements AuctionDAO<Auction> {
                 auctions.add(auction);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(java.util.logging.Level.SEVERE, "Errore durante il recupero delle aste", e);
         }
         return auctions;
     }
@@ -60,7 +61,7 @@ public class AuctionPostgresDAO implements AuctionDAO<Auction> {
                 auctions.add(createAuctionFromResultSet(resultSet));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(java.util.logging.Level.SEVERE, "Errore durante la ricerca delle aste", e);
         }
         return auctions;
     }
@@ -96,7 +97,7 @@ public class AuctionPostgresDAO implements AuctionDAO<Auction> {
         }
 
         if (category != null && !category.isEmpty()) {
-            statement.setString(parameterIndex++, "%" + category + "%");
+            statement.setString(parameterIndex, "%" + category + "%");
         }
     }
 
@@ -124,7 +125,7 @@ public class AuctionPostgresDAO implements AuctionDAO<Auction> {
                 auctions.add(createAuctionFromResultSet(resultSet));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(java.util.logging.Level.SEVERE, "Errore durante il recupero delle aste", e);
         }
         return auctions;
     }
@@ -149,7 +150,7 @@ public class AuctionPostgresDAO implements AuctionDAO<Auction> {
                 auctions.add(createAuctionFromResultSet(resultSet));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(java.util.logging.Level.SEVERE, "Errore durante il recupero delle mie aste", e);
         }
         return auctions;
     }

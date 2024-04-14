@@ -33,7 +33,7 @@ public class JWTAuthenticationFilter implements ContainerRequestFilter {
         if( AuthController.validateToken(token) ){
             System.out.println("Token is valid: " + token);
         } else {
-            System.out.println("Token is NOT valid: " + token);
+            System.out.println("Token is invalid: " + token);
             containerRequestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
         }
     }

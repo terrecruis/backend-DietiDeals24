@@ -19,10 +19,12 @@ import java.util.Date;
 import java.util.Properties;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 @Path("/auth")
 public class AuthController {
 
+    private static final Logger LOGGER = Logger.getLogger(AuthController.class.getName());
     private static final String ISSUER = "todo-rest-api";
     private static Algorithm algorithm;
     private static JWTVerifier verifier;
@@ -40,7 +42,7 @@ public class AuthController {
             algorithm = Algorithm.HMAC256(secretKey);
             verifier = JWT.require(algorithm).withIssuer(ISSUER).build();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(java.util.logging.Level.SEVERE, "Error reading configuration.properties file", e);
         }
     }
 
@@ -49,7 +51,7 @@ public class AuthController {
             DecodedJWT decodedJWT = verifier.verify(token);
             return decodedJWT.getClaim("username").asString();
         } catch (JWTVerificationException e) {
-            System.out.println(e.getMessage());
+            LOGGER.log(java.util.logging.Level.SEVERE, "Error verifying token", e);
             return null;
         }
     }
@@ -62,16 +64,13 @@ public class AuthController {
     public Response login(String json) {
         try {
             String email = accountService.getUsernameFromJson(json);
-            if (accountService.addAccountService(json)) {
                 String token = createJWT(email, TimeUnit.DAYS.toMillis(365)); // days
                 if(validateToken(token))
                     return Response.ok().entity(token).build();
                 else
                     return Response.status(Response.Status.UNAUTHORIZED).build();
-            } else {
-                return Response.status(Response.Status.UNAUTHORIZED).build();
-            }
-        } catch (Exception e) {
+            }  catch (Exception e) {
+            LOGGER.log(java.util.logging.Level.SEVERE, "Error login", e);
             return Response.serverError().build();
         }
     }
@@ -93,7 +92,7 @@ public class AuthController {
             verifier.verify(token);
             return true;
         } catch (JWTVerificationException e) {
-            System.out.println(e.getMessage());
+            LOGGER.log(java.util.logging.Level.SEVERE, "Error verifying token", e);
             return false;
         }
     }

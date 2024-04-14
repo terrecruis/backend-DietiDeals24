@@ -3,9 +3,9 @@ import java.util.List;
 
 public interface NotificationDAO<T> {
 
-    public List<T> getNotificationBuyerDAO(String email);
+    List<T> getNotificationBuyerDAO(String email);
 
-    public List<T> getNotificationSellerDAO(String email);
+    List<T> getNotificationSellerDAO(String email);
 
 
 }

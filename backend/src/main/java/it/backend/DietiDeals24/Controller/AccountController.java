@@ -11,7 +11,6 @@ public class AccountController {
     final AccountService service = new AccountService();
 
     @POST
-    @RequireJWTAuthentication
     @Path("/user")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)

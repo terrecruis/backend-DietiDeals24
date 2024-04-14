@@ -7,9 +7,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 public class DbConnection {
-
+    private static final Logger LOGGER = Logger.getLogger(DbConnection.class.getName());
     private static DbConnection instance;
 
     private Connection connection = null;
@@ -26,7 +27,7 @@ public class DbConnection {
             connection = DriverManager.getConnection(url, nome, password);
         } catch (ClassNotFoundException | SQLException ex) {
             System.out.println("Database Connection Creation Failed : " + ex.getMessage());
-            ex.printStackTrace();
+            LOGGER.log(java.util.logging.Level.SEVERE, "Database Connection Creation Failed", ex);
         }
     }
 
@@ -39,8 +40,7 @@ public class DbConnection {
             password = prop.getProperty("db.password");
             driver = prop.getProperty("db.driver");
         } catch (IOException ex) {
-            System.out.println("Errore durante la lettura del file configuration.properties");
-            ex.printStackTrace();
+            LOGGER.log(java.util.logging.Level.SEVERE, "Errore durante la lettura del file configuration.properties", ex);
         }
     }
 
