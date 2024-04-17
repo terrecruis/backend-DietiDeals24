@@ -3,6 +3,7 @@ import it.backend.DietiDeals24.Dao.AccountDAO;
 import it.backend.DietiDeals24.DbConnection.DbConnection;
 import it.backend.DietiDeals24.Exception.QueryExecutionException;
 import it.backend.DietiDeals24.Model.Account;
+import it.backend.DietiDeals24.Model.Buyer;
 import it.backend.DietiDeals24.Model.Seller;
 import it.backend.DietiDeals24.Model.SocialLink;
 import java.sql.Connection;
@@ -111,8 +112,17 @@ public class AccountPostgresDAO implements AccountDAO<Account> {
 
 
     @Override
-    public Account getInfoAccountDAO(String email) {
-        query = "SELECT * FROM venditore WHERE email = ?";
+    public Account getInfoSellerAccountByEmailDAO(String email) {
+        return getInfoAccountByEmailDAO(email, "venditore");
+    }
+
+    @Override
+    public Account getInfoBuyerAccountByEmailDAO(String email) {
+        return getInfoAccountByEmailDAO(email, "compratore");
+    }
+
+    public Account getInfoAccountByEmailDAO(String email, String tableName) {
+        query = "SELECT * FROM " + tableName + " WHERE email = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, email);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -120,26 +130,31 @@ public class AccountPostgresDAO implements AccountDAO<Account> {
                     String emailAccount = resultSet.getString("email");
                     String fullName = resultSet.getString("nomeCompleto");
                     String foto = resultSet.getString("foto");
-                    int telephoneNumber = resultSet.getInt("telephoneNumber");
+                    String telephoneNumber = resultSet.getString("telephoneNumber");
                     String description = resultSet.getString("descrizione");
                     String country = resultSet.getString("nazionalita");
                     String link1 = resultSet.getString("link1");
                     String link2 = resultSet.getString("link2");
                     System.out.println("email: " + emailAccount);
 
-                    Account seller = new Seller(fullName, foto, emailAccount, description, telephoneNumber, country);
-                    seller.addSocialLink(new SocialLink(link1));
-                    seller.addSocialLink(new SocialLink(link2));
-                    return seller;
-
+                    Account account;
+                    if (tableName.equals("venditore")) {
+                        account = new Seller(fullName, foto, emailAccount, description, telephoneNumber, country);
+                    } else {
+                        account = new Buyer(fullName, foto, emailAccount, description, telephoneNumber, country);
+                    }
+                    account.addSocialLink(new SocialLink(link1));
+                    account.addSocialLink(new SocialLink(link2));
+                    return account;
                 } else {
                     return null;
                 }
             }
         } catch (SQLException e) {
-            throw new QueryExecutionException("problema aggiunta utente nel database!", e);
+            throw new QueryExecutionException("Problema durante il recupero delle informazioni dell'account dal database!", e);
         }
     }
+
 
 
 

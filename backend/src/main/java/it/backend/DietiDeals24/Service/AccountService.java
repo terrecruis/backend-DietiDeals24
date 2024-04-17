@@ -46,10 +46,13 @@ public class AccountService {
         }
     }
 
-    public Account getInfoAccountService(String email) {
-        return account.getInfoAccountDAO(email);
+    public Account getInfoSellerAccountService(String email) {
+        return account.getInfoSellerAccountByEmailDAO(email);
     }
 
+    public Account getInfoBuyerAccountService(String email) {
+        return account.getInfoBuyerAccountByEmailDAO(email);
+    }
 
     public boolean updateInfoAccountService(String json, String accountType) {
         try {

@@ -10,7 +10,7 @@ public class Seller extends Account {
         super(email);
     }
 
-    public Seller(String fullName, String imageAccount, String email, String description, Integer telephoneNumber, String country) {
+    public Seller(String fullName, String imageAccount, String email, String description, String telephoneNumber, String country) {
         super(fullName, imageAccount, email, description, telephoneNumber, country);
     }
     //get and set

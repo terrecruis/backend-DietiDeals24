@@ -8,13 +8,13 @@ public class Buyer extends Account{
     private List<Auction> followedAuctions;
 
     //buyer with followed auctions
-    public Buyer(String fullName, String imageAccount, String email, String description, Integer telephoneNumber, String country,List<Auction> followedAuctions) {
+    public Buyer(String fullName, String imageAccount, String email, String description, String telephoneNumber, String country,List<Auction> followedAuctions) {
         super(fullName, imageAccount, email, description, telephoneNumber, country);
         this.followedAuctions = followedAuctions;
     }
 
     //buyer without followed auctions
-    public Buyer(String fullName, String imageAccount, String email, String description, Integer telephoneNumber, String country) {
+    public Buyer(String fullName, String imageAccount, String email, String description, String telephoneNumber, String country) {
         super(fullName, imageAccount, email, description, telephoneNumber, country);
         this.followedAuctions = new ArrayList<>();
     }

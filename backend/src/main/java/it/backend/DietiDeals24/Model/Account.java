@@ -16,13 +16,13 @@ public abstract class  Account {
 
     private String description;
 
-    private Integer telephoneNumber;
+    private String telephoneNumber;
 
     private String country;
 
 
     //full constructor
-    protected Account(String fullName, String imageAccount, String email, String description, Integer telephoneNumber, String country) {
+    protected Account(String fullName, String imageAccount, String email, String description, String telephoneNumber, String country) {
         this.fullName = fullName;
         this.imageAccount = imageAccount;
         this.email = email;
@@ -32,7 +32,7 @@ public abstract class  Account {
     }
 
     //starting constructor
-    protected Account(String fullName, Integer telephoneNumber, String email) {
+    protected Account(String fullName, String telephoneNumber, String email) {
         this.fullName = fullName;
         this.email = email;
         this.telephoneNumber = telephoneNumber;
@@ -59,7 +59,7 @@ public abstract class  Account {
         return description;
     }
 
-    public Integer getTelephoneNumber() {
+    public String getTelephoneNumber() {
         return telephoneNumber;
     }
 
@@ -85,7 +85,7 @@ public abstract class  Account {
         this.description = description;
     }
 
-    public void setTelephoneNumber(Integer telephoneNumber) {
+    public void setTelephoneNumber(String telephoneNumber) {
         this.telephoneNumber = telephoneNumber;
     }
 

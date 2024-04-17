@@ -7,7 +7,9 @@ public interface AccountDAO<T> {
 
     boolean addAccountDAO(String email, String fullname, String telephoneNumber);
 
-    T getInfoAccountDAO(String email);
+    T getInfoBuyerAccountByEmailDAO(String email);
+
+    T getInfoSellerAccountByEmailDAO(String email);
 
     boolean updateInfoSellerAccountDAO(String email, String fullname, String telephoneNumber, String country, String description, String link1, String link2);
 

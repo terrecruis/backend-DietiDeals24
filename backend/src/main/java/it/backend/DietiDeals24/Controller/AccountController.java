@@ -40,11 +40,20 @@ public class AccountController {
 
 
     @GET
-    @Path("/info/{email}")
-    @RequireJWTAuthentication
+    @Path("/info/seller/{email}")
+    //@RequireJWTAuthentication
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getInfoAccount(@PathParam("email") String email) {
-        return Response.ok(service.getInfoAccountService(email)).build();
+    public Response getInfoSellerAccount(@PathParam("email") String email) {
+        return Response.ok(service.getInfoSellerAccountService(email)).build();
+    }
+
+
+    @GET
+    @Path("/info/buyer/{email}")
+    //@RequireJWTAuthentication
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getInfoBuyerAccount(@PathParam("email") String email) {
+        return Response.ok(service.getInfoBuyerAccountService(email)).build();
     }
 
 
