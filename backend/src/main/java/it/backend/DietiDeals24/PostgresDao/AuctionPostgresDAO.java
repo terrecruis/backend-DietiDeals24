@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -191,10 +193,25 @@ public class AuctionPostgresDAO implements AuctionDAO<Auction> {
             Integer timer = resultSet.getInt("timer");
             return new IncrementalAuction(id, new Seller(seller), null, title, description, imageAuction, category, location, startingPrice, raisingThreshold, timer, currentPrice);
         } else {
-            Date endOfAuction = resultSet.getDate("dataScadenza");
+            // Format the date string before creating FixedTimeAuction instance
+            String dateString = resultSet.getString("dataScadenza");
+            Date endOfAuction = formatDate(dateString);
             BigDecimal minimumSecretThreshold = resultSet.getBigDecimal("sogliaMinimaSegreta");
             return new FixedTimeAuction(id, new Seller(seller), null, title, description, imageAuction, category, location, endOfAuction, minimumSecretThreshold, currentPrice);
         }
     }
 
+    // Helper method to format date string
+    private Date formatDate(String dateString) {
+        try {
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+            Date date = inputFormat.parse(dateString);
+            SimpleDateFormat outputFormat = new SimpleDateFormat("dd-MM-yyyy");
+            String formattedDate = outputFormat.format(date);
+            return outputFormat.parse(formattedDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null; // Return null in case of parsing error
+        }
+    }
 }

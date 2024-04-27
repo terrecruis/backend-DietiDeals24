@@ -1,5 +1,8 @@
 package it.backend.DietiDeals24.Model;
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public abstract class Auction {
@@ -111,8 +114,6 @@ public abstract class Auction {
     public void setLocation(String location) {
         this.location = location;
     }
-
-
 
 
 }

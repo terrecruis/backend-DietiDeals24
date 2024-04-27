@@ -110,7 +110,6 @@ public class AccountPostgresDAO implements AccountDAO<Account> {
         }
     }
 
-
     @Override
     public Account getInfoSellerAccountByEmailDAO(String email) {
         return getInfoAccountByEmailDAO(email, "venditore");

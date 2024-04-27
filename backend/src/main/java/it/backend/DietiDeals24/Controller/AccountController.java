@@ -50,20 +50,21 @@ public class AccountController {
 
     @GET
     @Path("/info/buyer/{email}")
-    //@RequireJWTAuthentication
+    @RequireJWTAuthentication
     @Produces(MediaType.APPLICATION_JSON)
     public Response getInfoBuyerAccount(@PathParam("email") String email) {
         return Response.ok(service.getInfoBuyerAccountService(email)).build();
     }
 
 
-    //funzione per modifica del profilo
+
     @PUT
     @Path("/{accountType}/modifyAccount")
     @RequireJWTAuthentication
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateInfoAccount(String json, @PathParam("accountType") String accountType) {
+        System.out.println(json);
         if(service.updateInfoAccountService(json, accountType)) {
             return Response.ok().build();
         } else {
