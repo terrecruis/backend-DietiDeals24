@@ -157,6 +157,51 @@ public class AuctionPostgresDAO implements AuctionDAO<Auction> {
         return auctions;
     }
 
+    @Override
+    public boolean insertFixedTimeAuctionDAO(FixedTimeAuction auction) {
+        query = "INSERT INTO ASTA (idAsta, emailVenditore, titolo, descrizione, foto, categoria, luogo, tipoAsta, dataScadenza, sogliaMinimaSegreta, statoAsta) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, 'tempoFisso', ?, ?, 'in corso')";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, auction.getId());
+            statement.setString(2, auction.getCreator().getEmail());
+            statement.setString(3, auction.getTitle());
+            statement.setString(4, auction.getDescription());
+            statement.setString(5, auction.getImageAuction());
+            statement.setString(6, auction.getCategory());
+            statement.setString(7, auction.getLocation());
+            statement.setDate(8, new java.sql.Date(auction.getEndOfAuction().getTime()));
+            statement.setBigDecimal(9, auction.getMinimumSecretThreshold());
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            LOGGER.log(java.util.logging.Level.SEVERE, "Errore durante l'inserimento dell'asta a tempo fisso", e);
+            return false;
+        }
+    }
+
+    @Override
+    public boolean insertIncrementalAuctionDAO(IncrementalAuction auction) {
+        query = "INSERT INTO ASTA (idAsta, emailVenditore, titolo, descrizione, foto, categoria, luogo, tipoAsta, basePubblica, sogliaRialzo, timer, statoAsta) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, 'incrementale', ?, ?, ?, 'in corso')";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, auction.getId());
+            statement.setString(2, auction.getCreator().getEmail());
+            statement.setString(3, auction.getTitle());
+            statement.setString(4, auction.getDescription());
+            statement.setString(5, auction.getImageAuction());
+            statement.setString(6, auction.getCategory());
+            statement.setString(7, auction.getLocation());
+            statement.setBigDecimal(8, auction.getStartingPrice());
+            statement.setBigDecimal(9, auction.getRaisingThreshold());
+            statement.setInt(10, auction.getTimer());
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            LOGGER.log(java.util.logging.Level.SEVERE, "Errore durante l'inserimento dell'asta incrementale", e);
+            return false;
+        }
+    }
+
 
     /*
     * Sfrutta le procedure di aggiornamento a cascata implementate nel datbase

@@ -3,6 +3,9 @@ import it.backend.DietiDeals24.Model.Auction;
 import it.backend.DietiDeals24.Service.AuctionService;
 import it.backend.DietiDeals24.filter.RequireJWTAuthentication;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,5 +52,35 @@ public class AuctionController {
             @QueryParam("endingPrice") String endingPrice) {
         return service.getAuctionsByCategoryAndPriceService(toSearch, startingPrice, endingPrice, category);
     }
+
+
+    @PUT
+    @Path("/createAuction/fixedTime")
+    //@RequireJWTAuthentication
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createAuctionFixedTime(String json) {
+        if (service.createAuctionFixedTimeService(json)) {
+            return Response.ok().build();
+        } else {
+            return Response.status(Response.Status.UNAUTHORIZED).entity("database error!").build();
+        }
+    }
+
+
+    @PUT
+    @Path("/createAuction/incremental")
+    //@RequireJWTAuthentication
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createAuctionIncremental(String json) {
+        if (service.createIncrementalAuctionService(json)) {
+            return Response.ok().build();
+        } else {
+            return Response.status(Response.Status.UNAUTHORIZED).entity("database error!").build();
+        }
+    }
+
+
+
+
 
 }

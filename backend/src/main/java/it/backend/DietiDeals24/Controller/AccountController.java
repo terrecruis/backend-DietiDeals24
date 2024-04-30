@@ -64,7 +64,6 @@ public class AccountController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateInfoAccount(String json, @PathParam("accountType") String accountType) {
-        System.out.println(json);
         if(service.updateInfoAccountService(json, accountType)) {
             return Response.ok().build();
         } else {
