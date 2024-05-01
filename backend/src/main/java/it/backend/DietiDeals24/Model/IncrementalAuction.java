@@ -16,8 +16,6 @@ public class IncrementalAuction extends  Auction {
         this.raisingThreshold = raisingThreshold;
         this.timer = timer;
     }
-
-
     //all get
     public BigDecimal getStartingPrice() {
         return startingPrice;

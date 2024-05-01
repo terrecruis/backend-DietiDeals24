@@ -7,10 +7,7 @@
 
 CREATE DOMAIN DOMINIO_TIPOASTA AS VARCHAR
     CHECK (VALUE IN ('incrementale', 'tempoFisso'));
-
-CREATE DOMAIN DOMINIO_CATEGORIA AS VARCHAR
-    CHECK (VALUE IN ('Arte', 'Sport', 'Musica', 'Giochi', 'Elettronica', 'Altro'));
-
+ 
 CREATE DOMAIN DOMINIO_STATOASTA AS VARCHAR
     CHECK (VALUE IN ('in corso', 'conclusa', 'fallita'));
 
@@ -60,7 +57,7 @@ CREATE TABLE IF NOT EXISTS ASTA
     titolo VARCHAR(150) NOT NULL, 
     descrizione VARCHAR NOT NULL,
     foto VARCHAR,
-    categoria DOMINIO_CATEGORIA NOT NULL,
+    categoria VARCHAR NOT NULL,
     tipoAsta DOMINIO_TIPOASTA NOT NULL,
     dataScadenza DATE,
     timer INTEGER,
@@ -144,7 +141,7 @@ CREATE OR REPLACE VIEW UTENTI AS
 
 -- MOSTRA LE ASTE ATTIVE CON IL PREZZO CORRENTE 
 CREATE OR REPLACE VIEW VistaAsteAttiveConPuntata AS
-SELECT a.idAsta, a.titolo, a.descrizione, a.luogo, a.foto, a.categoria, a.tipoAsta, TO_CHAR(a.dataScadenza, 'DD/MM/YYYY'), a.timer, a.sogliaMinimaSegreta, a.basePubblica, a.sogliaRialzo, a.StatoAsta, a.emailVenditore, 
+SELECT a.idAsta, a.titolo, a.descrizione, a.luogo, a.foto, a.categoria, a.tipoAsta, TO_CHAR(a.dataScadenza, 'DD/MM/YYYY'), a.timer, a.sogliaMinimaSegreta, a.basePubblica, a.sogliaRialzo, a.StatoAsta,a.dataScadenza, a.emailVenditore, 
        MAX(p.importo) AS prezzoMassimo
 FROM ASTA a
 LEFT JOIN PUNTATA p ON a.idAsta = p.idAsta

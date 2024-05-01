@@ -56,7 +56,7 @@ public class AuctionController {
 
     @PUT
     @Path("/createAuction/fixedTime")
-    //@RequireJWTAuthentication
+    @RequireJWTAuthentication
     @Produces(MediaType.APPLICATION_JSON)
     public Response createAuctionFixedTime(String json) {
         if (service.createAuctionFixedTimeService(json)) {
@@ -69,7 +69,7 @@ public class AuctionController {
 
     @PUT
     @Path("/createAuction/incremental")
-    //@RequireJWTAuthentication
+    @RequireJWTAuthentication
     @Produces(MediaType.APPLICATION_JSON)
     public Response createAuctionIncremental(String json) {
         if (service.createIncrementalAuctionService(json)) {

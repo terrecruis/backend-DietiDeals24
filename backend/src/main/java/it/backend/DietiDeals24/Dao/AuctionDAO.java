@@ -21,4 +21,6 @@ public interface AuctionDAO<T> {
 
     boolean insertFixedTimeAuctionDAO(FixedTimeAuction auction);
 
+    String getNextAuctionId();
+
 }

@@ -16,7 +16,6 @@ public class AccountController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response addAccount(String json) {
         boolean success = service.addAccountService(json);
-
         if (success) {
             return Response.ok().build();
         } else {
@@ -45,7 +44,7 @@ public class AccountController {
 
     @GET
     @Path("/info/seller/{email}")
-    //@RequireJWTAuthentication
+    @RequireJWTAuthentication
     @Produces(MediaType.APPLICATION_JSON)
     public Response getInfoSellerAccount(@PathParam("email") String email) {
         return Response.ok(service.getInfoSellerAccountService(email)).build();

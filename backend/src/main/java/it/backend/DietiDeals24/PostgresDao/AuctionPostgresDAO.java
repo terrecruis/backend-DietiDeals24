@@ -10,8 +10,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -181,19 +179,19 @@ public class AuctionPostgresDAO implements AuctionDAO<Auction> {
 
     @Override
     public boolean insertIncrementalAuctionDAO(IncrementalAuction auction) {
-        query = "INSERT INTO ASTA (idAsta, emailVenditore, titolo, descrizione, foto, categoria, luogo, tipoAsta, basePubblica, sogliaRialzo, timer, statoAsta) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, 'incrementale', ?, ?, ?, 'in corso')";
+        query = "INSERT INTO ASTA (idAsta, titolo, descrizione, foto, categoria, tipoAsta, timer, sogliaRialzo, basePubblica, StatoAsta, emailVenditore, luogo) " +
+                "VALUES (?, ?, ?, ?, ?, 'incrementale', ?, ?, ?, 'in corso', ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, auction.getId());
-            statement.setString(2, auction.getCreator().getEmail());
-            statement.setString(3, auction.getTitle());
-            statement.setString(4, auction.getDescription());
-            statement.setString(5, auction.getImageAuction());
-            statement.setString(6, auction.getCategory());
-            statement.setString(7, auction.getLocation());
+            statement.setString(2, auction.getTitle());
+            statement.setString(3, auction.getDescription());
+            statement.setString(4, auction.getImageAuction());
+            statement.setString(5, auction.getCategory());
+            statement.setInt(6, auction.getTimer());
+            statement.setBigDecimal(7, auction.getRaisingThreshold());
             statement.setBigDecimal(8, auction.getStartingPrice());
-            statement.setBigDecimal(9, auction.getRaisingThreshold());
-            statement.setInt(10, auction.getTimer());
+            statement.setString(9, auction.getCreator().getEmail());
+            statement.setString(10, auction.getLocation());
             statement.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -204,10 +202,10 @@ public class AuctionPostgresDAO implements AuctionDAO<Auction> {
 
 
     /*
-    * Sfrutta le procedure di aggiornamento a cascata implementate nel datbase
-    * cosi da alleggerire il carico di lavoro del server e migliorare le prestazioni.
-    * Non solo aggiorna lo stato delle aste ma anche le notifiche associate ad un asta specifica.
-    */
+     * Sfrutta le procedure di aggiornamento a cascata implementate nel datbase
+     * cosi da alleggerire il carico di lavoro del server e migliorare le prestazioni.
+     * Non solo aggiorna lo stato delle aste ma anche le notifiche associate ad un asta specifica.
+     */
     @Override
     public void updateStatusAuctionsDAO() {
         query = "CALL aggiornastatoasta()";
@@ -217,6 +215,30 @@ public class AuctionPostgresDAO implements AuctionDAO<Auction> {
         } catch (SQLException e) {
             throw new QueryExecutionException("Errore durante l'aggiornamento dello stato delle aste", e);
         }
+    }
+
+
+    public String getNextAuctionId() {
+        String nextId = null;
+        query = "SELECT MAX(idAsta) AS maxId FROM ASTA";
+
+        try (PreparedStatement statement = connection.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
+            if (resultSet.next()) {
+                String maxId = resultSet.getString("maxId");
+                if (maxId != null) {
+                    String[] parts = maxId.split("-");
+                    int idNumber = Integer.parseInt(parts[1]) + 1;
+                    nextId = "ID-" + String.format("%03d", idNumber);
+                } else {
+                    nextId = "ID-001";
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(java.util.logging.Level.SEVERE, "Errore durante la generazione del prossimo ID asta", e);
+        }
+
+        return nextId;
     }
 
 
@@ -239,24 +261,9 @@ public class AuctionPostgresDAO implements AuctionDAO<Auction> {
             return new IncrementalAuction(id, new Seller(seller), null, title, description, imageAuction, category, location, startingPrice, raisingThreshold, timer, currentPrice);
         } else {
             // Format the date string before creating FixedTimeAuction instance
-            String dateString = resultSet.getString("dataScadenza");
-            Date endOfAuction = formatDate(dateString);
+            Date endOfAuction = resultSet.getDate("dataScadenza");
             BigDecimal minimumSecretThreshold = resultSet.getBigDecimal("sogliaMinimaSegreta");
             return new FixedTimeAuction(id, new Seller(seller), null, title, description, imageAuction, category, location, endOfAuction, minimumSecretThreshold, currentPrice);
-        }
-    }
-
-    // Helper method to format date string
-    private Date formatDate(String dateString) {
-        try {
-            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-            Date date = inputFormat.parse(dateString);
-            SimpleDateFormat outputFormat = new SimpleDateFormat("dd-MM-yyyy");
-            String formattedDate = outputFormat.format(date);
-            return outputFormat.parse(formattedDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return null; // Return null in case of parsing error
         }
     }
 }

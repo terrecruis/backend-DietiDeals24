@@ -57,12 +57,27 @@ public class AuctionService {
         try {
             JsonObject jsonObject = parseJsonObject(json);
             IncrementalAuction incremental = parseIncrementalAuctionFromJson(jsonObject);
+
+            System.out.println("Starting Price: " + incremental.getStartingPrice());
+            System.out.println("Raising Threshold: " + incremental.getRaisingThreshold());
+            System.out.println("Timer: " + incremental.getTimer());
+            System.out.println("ID: " + incremental.getId());
+            System.out.println("Creator: " + incremental.getCreator().getEmail());
+            System.out.println("Participants: " + incremental.getParticipants());
+            System.out.println("Title: " + incremental.getTitle());
+            System.out.println("Description: " + incremental.getDescription());
+            System.out.println("Image Auction: " + incremental.getImageAuction());
+            System.out.println("Category: " + incremental.getCategory());
+            System.out.println("Location: " + incremental.getLocation());
+            System.out.println("Current Price: " + incremental.getCurrentPrice());
+
             return auction.insertIncrementalAuctionDAO(incremental);
         } catch (ParseException e) {
             LOGGER.severe("Errore durante il parsing del JSON della creazione incremental auction");
             return false;
         }
     }
+
 
     private JsonObject parseJsonObject(String json) {
         try (JsonReader reader = Json.createReader(new StringReader(json))) {
@@ -71,7 +86,7 @@ public class AuctionService {
     }
 
     private FixedTimeAuction parseFixedTimeAuctionFromJson(JsonObject jsonObject) throws ParseException {
-        String id = jsonObject.getString("id");
+        String id = auction.getNextAuctionId();
         JsonObject creatorObject = jsonObject.getJsonObject("creator");
         String creatorEmail = creatorObject.getString("email");
         Seller creator = new Seller(creatorEmail);
@@ -97,7 +112,8 @@ public class AuctionService {
     }
 
     private IncrementalAuction parseIncrementalAuctionFromJson(JsonObject jsonObject) throws ParseException {
-        String id = jsonObject.getString("id");
+        String id = auction.getNextAuctionId();
+        System.out.println("id generato : " + id);
         JsonObject creatorObject = jsonObject.getJsonObject("creator");
         String creatorEmail = creatorObject.getString("email");
         Seller creator = new Seller(creatorEmail);
@@ -113,5 +129,6 @@ public class AuctionService {
         int timer = jsonObject.getInt("timer");
 
         return new IncrementalAuction(id, creator, null, title, description, imageAuction, category, location, startingPrice, raisingThreshold, timer, currentPrice);
+
     }
 }
