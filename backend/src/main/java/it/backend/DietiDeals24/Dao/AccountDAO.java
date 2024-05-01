@@ -3,7 +3,7 @@ package it.backend.DietiDeals24.Dao;
 
 public interface AccountDAO<T> {
 
-    boolean upgradePremiumAccountDAO(String email, String fullname, String telephoneNumber);
+    boolean upgradePremiumAccountDAO(String email);
 
     boolean addAccountDAO(String email, String fullname, String telephoneNumber);
 

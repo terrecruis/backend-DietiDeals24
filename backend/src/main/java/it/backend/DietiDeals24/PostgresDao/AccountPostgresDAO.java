@@ -61,21 +61,34 @@ public class AccountPostgresDAO implements AccountDAO<Account> {
 
 
     @Override
-    public boolean upgradePremiumAccountDAO(String email, String fullName, String telephoneNumber) {
+    public boolean upgradePremiumAccountDAO(String email) {
         String selectQuery = "SELECT email FROM venditore WHERE email = ?";
         try (PreparedStatement selectStatement = connection.prepareStatement(selectQuery)) {
             selectStatement.setString(1, email);
             try (ResultSet resultSet = selectStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    return true;
+                    return true; // Esiste già un venditore con questa email
                 } else {
-                    String insertQuery = "INSERT INTO venditore (email, nomeCompleto, telephoneNumber) VALUES (?, ?, ?)";
-                    try (PreparedStatement insertStatement = connection.prepareStatement(insertQuery)) {
-                        insertStatement.setString(1, email);
-                        insertStatement.setString(2, fullName);
-                        insertStatement.setString(3, telephoneNumber);
-                        int rowsAffected = insertStatement.executeUpdate();
-                        return rowsAffected > 0;
+                    // Ottieni i dati dal compratore
+                    String buyerDataQuery = "SELECT nomeCompleto, telephoneNumber FROM compratore WHERE email = ?";
+                    try (PreparedStatement buyerDataStatement = connection.prepareStatement(buyerDataQuery)) {
+                        buyerDataStatement.setString(1, email);
+                        try (ResultSet buyerDataResultSet = buyerDataStatement.executeQuery()) {
+                            if (buyerDataResultSet.next()) {
+                                // Inserisci i dati del compratore nella tabella venditore
+                                String insertQuery = "INSERT INTO venditore (email, nomeCompleto, telephoneNumber) VALUES (?, ?, ?)";
+                                try (PreparedStatement insertStatement = connection.prepareStatement(insertQuery)) {
+                                    insertStatement.setString(1, email);
+                                    insertStatement.setString(2, buyerDataResultSet.getString("nomeCompleto"));
+                                    insertStatement.setString(3, buyerDataResultSet.getString("telephoneNumber"));
+                                    int rowsAffected = insertStatement.executeUpdate();
+                                    return rowsAffected > 0;
+                                }
+                            } else {
+                                // Il compratore non esiste
+                                return false;
+                            }
+                        }
                     }
                 }
             }

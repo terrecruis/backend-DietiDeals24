@@ -26,15 +26,19 @@ public class AccountController {
 
 
     @POST
-    @Path("/premiumSeller")
+    @Path("/premiumSeller/{email}")
     @RequireJWTAuthentication
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response upgradePremiumAccount(String json) {
-        if(service.upgradePremiumAccountService(json)) {
-            return Response.ok().build();
-        } else {
-            return Response.status(Response.Status.UNAUTHORIZED).entity("database error!").build();
+    public Response upgradePremiumAccount(@PathParam("email") String email) {
+        try {
+            if(service.upgradePremiumAccountService(email)) {
+                return Response.ok().build();
+            } else {
+                return Response.status(Response.Status.UNAUTHORIZED).entity("database error!").build();
+            }
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("internal server error!").build();
         }
     }
 

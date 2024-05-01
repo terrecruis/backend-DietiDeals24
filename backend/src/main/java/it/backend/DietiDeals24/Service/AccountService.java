@@ -33,11 +33,9 @@ public class AccountService {
         }
     }
 
-    public boolean upgradePremiumAccountService(String json) {
+    public boolean upgradePremiumAccountService(String email) {
         try {
-            JsonObject jsonObject = parseJson(json);
-            String[] fields = extractMainFields(jsonObject);
-            return account.upgradePremiumAccountDAO(fields[0], fields[1], fields[2]);
+            return account.upgradePremiumAccountDAO(email);
         } catch (Exception e) {
             LOGGER.severe("Errore durante l'upgrade dell'account");
             return false;
