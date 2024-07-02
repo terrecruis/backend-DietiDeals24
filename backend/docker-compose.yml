@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: indovinato
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # Monta il file init.sql nella directory di inizializzazione
+    ports:
+      - "5432:5432"  # Mappa la porta del container PostgreSQL sulla porta della macchina host
+
+  backend:
+    build:
+      context: ./  # Percorso del Dockerfile del backend
+    restart: always
+    ports:
+      - "8080:8080"  # Mappa la porta del container del backend sulla porta della macchina host
+    depends_on:
+      - postgres  # Dipendenza dal servizio PostgreSQL
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: indovinato
+      POSTGRES_HOST: postgres
+
+  init-script:
+    image: postgres:latest
+    volumes:
+      - ./init.sql:/scripts/init.sql  # Monta il file init.sql nella directory di esecuzione
+    entrypoint: /bin/bash
+    command: >
+      -c "
+      until pg_isready -h postgres -U postgres; do
+        echo 'Waiting for postgres...';
+        sleep 5;
+      done;
+      PGPASSWORD=indovinato psql -h postgres -U postgres -d postgres -f /scripts/init.sql
+      "
+    depends_on:
+      - postgres
