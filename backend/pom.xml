@@ -33,10 +33,17 @@
             <artifactId>jersey-hk2</artifactId>
         </dependency>
 
+
+        <dependency>
+            <groupId>org.eclipse.parsson</groupId>
+            <artifactId>jakarta.json</artifactId>
+            <version>1.1.6</version>
+        </dependency>
+
         <dependency>
             <groupId>jakarta.json</groupId>
             <artifactId>jakarta.json-api</artifactId>
-            <version>2.1.1</version> <!-- Sostituisci con l'ultima versione disponibile -->
+            <version>2.1.1</version>
         </dependency>
 
         <dependency>
@@ -44,14 +51,6 @@
             <artifactId>grizzly-http-server</artifactId>
             <version>2.4.4</version>
         </dependency>
-
-        <dependency>
-            <groupId>jakarta.json</groupId>
-            <artifactId>jakarta.json-api</artifactId>
-            <version>2.0.0</version> <!-- Sostituisci con l'ultima versione disponibile -->
-        </dependency>
-
-
 
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
